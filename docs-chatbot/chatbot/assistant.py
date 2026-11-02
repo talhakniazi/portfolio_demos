@@ -12,7 +12,8 @@ from .ingest import Chunk
 from .retrieve import Index, expand, tokens
 
 BUSINESS = "Kestrel Cycles"
-CONTACT = "call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example"
+import os
+CONTACT = os.environ.get("CHATBOT_CONTACT", "call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example")
 MIN_SCORE = 0.12            # below this, the documents probably don't cover the question
 CONFIDENT = 0.16            # above this, a model refusal is probably over-caution: fall back to the best passage
 # Both thresholds were set from eval_questions.json; re-check them with each client's own question set.
