@@ -27,7 +27,7 @@ def evaluate(out_path: Path | None = None) -> dict:
     rows, passed = [], 0
     for c in cases:
         r = a.answer(c["q"])
-        ok_outcome = r["outcome"] == c["expect"] or (c["expect"] == "answered" and r["outcome"] == "fallback")
+        ok_outcome = r["outcome"] == c["expect"] or (c["expect"] == "answered" and r["outcome"] in ("fallback", "answered_from_passage"))
         ok_source = c.get("source") is None or any(s["file"] == c["source"] for s in r["sources"])
         ok_facts = all(f.lower() in r["answer"].lower() for f in c.get("facts", []))
         ok_forbid = not any(f.lower() in r["answer"].lower() for f in c.get("forbid", []))
@@ -35,8 +35,11 @@ def evaluate(out_path: Path | None = None) -> dict:
         passed += ok
         rows.append({**c, "answer": r["answer"], "outcome": r["outcome"], "sources": r["sources"], "ms": r["ms"], "pass": ok})
         print(f"{'PASS' if ok else 'FAIL'}  {c['q']}\n      -> {r['answer']}")
-    summary = {"provider": llm.provider_name(), "passed": passed, "total": len(cases), "cases": rows}
-    print(f"\n{passed}/{len(cases)} passed with provider '{summary['provider']}'")
+    import os
+    by = Counter(x["outcome"] for x in rows)
+    summary = {"provider": llm.provider_name(), "model": os.environ.get("CHATBOT_MODEL"), "passed": passed, "total": len(cases),
+               "outcomes": dict(by), "cases": rows}
+    print(f"\n{passed}/{len(cases)} passed with provider '{summary['provider']}' model '{summary['model']}' - outcomes {dict(by)}")
     if out_path:
         out_path.write_text(json.dumps(summary, indent=1), encoding="utf-8")
     return summary

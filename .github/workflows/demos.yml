@@ -59,13 +59,18 @@ jobs:
           curl -fsSL https://ollama.com/install.sh | sh
           (ollama serve > /tmp/ollama.log 2>&1 &) ; sleep 5
           ollama pull qwen2.5:3b
-      - name: Evaluate answers with the real model
-        env: { CHATBOT_PROVIDER: ollama, CHATBOT_MODEL: "qwen2.5:3b" }
+          ollama pull qwen2.5:7b
+      - name: Evaluate answers with two real models (3B and 7B)
+        env: { CHATBOT_PROVIDER: ollama }
         run: |
           mkdir -p evidence
-          python -m chatbot.cli eval --out evidence/eval-ollama.json | tee evidence/eval-ollama.txt
+          for m in qwen2.5:3b qwen2.5:7b; do
+            f=$(echo $m | tr ':.' '--')
+            CHATBOT_MODEL=$m python -m chatbot.cli eval --out evidence/eval-$f.json | tee evidence/eval-$f.txt || true
+          done
+          grep -h "passed with" evidence/eval-*.txt
       - name: Screenshots of the chat widget
-        env: { CHATBOT_PROVIDER: ollama, CHATBOT_MODEL: "qwen2.5:3b" }
+        env: { CHATBOT_PROVIDER: ollama, CHATBOT_MODEL: "qwen2.5:7b" }
         run: python scripts/screenshots.py
       - uses: actions/upload-artifact@v4
         if: always()

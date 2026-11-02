@@ -72,10 +72,18 @@ def test_llm_answer_is_used_and_citations_renumbered(bot, monkeypatch):
     assert r["answer"] == "It costs £140 [1]." and len(r["sources"]) == 1
 
 
-def test_llm_no_answer_becomes_polite_refusal(bot, monkeypatch):
+def test_llm_refusal_on_off_topic_question_stays_a_refusal(bot, monkeypatch):
     monkeypatch.setenv("CHATBOT_PROVIDER", "fake")
     monkeypatch.setitem(llm.PROVIDERS, "fake", lambda system, msgs: "NO_ANSWER")
-    assert bot.answer("How much is a full service?")["outcome"] == "not_found"
+    assert bot.answer("Do you sell skateboards?")["outcome"] == "not_found"
+
+
+def test_over_cautious_llm_refusal_falls_back_to_the_passage(bot, monkeypatch):
+    """Small models sometimes refuse questions the documents clearly answer (seen with qwen2.5:3b in CI)."""
+    monkeypatch.setenv("CHATBOT_PROVIDER", "fake")
+    monkeypatch.setitem(llm.PROVIDERS, "fake", lambda system, msgs: "NO_ANSWER")
+    r = bot.answer("Is there a fee to return a bike by courier?")
+    assert r["outcome"] == "answered_from_passage" and "£35" in r["answer"]
 
 
 def test_provider_outage_falls_back_without_crashing(bot, monkeypatch):

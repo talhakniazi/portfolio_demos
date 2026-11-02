@@ -182,6 +182,8 @@ const t = (msg.subject + ' ' + msg.text).toLowerCase();
 const ruleCat = /refund|charged|invoice|payment|billing/.test(t) ? 'billing' : /log ?in|password|locked|2fa|access/.test(t) ? 'account_access'
   : /error|bug|crash|broken|not working/.test(t) ? 'bug' : /feature|would be great|suggest/.test(t) ? 'feature_request' : 'other';
 const rulePri = /urgent|down|can't use|cannot use|data loss|charged twice|security|hacked/.test(t) ? 'urgent' : 'normal';
+// Emails that try to instruct the AI are flagged for a person to check, whatever the AI decided
+const injection = /ignore (all |any )?(previous|prior|above) instructions|you are now|system prompt|classify this as|mark (this|it) as/i.test(t);
 const r = {
   category: pick(ai.category, ['billing', 'bug', 'account_access', 'feature_request', 'other'], ruleCat),
   priority: pick(ai.priority, ['urgent', 'high', 'normal', 'low'], rulePri),
@@ -189,11 +191,13 @@ const r = {
   summary: String(ai.summary || msg.subject || msg.text.slice(0, 120)).slice(0, 300),
   suggested_reply: String(ai.suggested_reply || '').slice(0, 1500),
   triaged_by: used_ai ? 'ai' : 'rules (AI unavailable)',
+  needs_human_review: injection,
 };
+if (injection) { r.priority = rulePri; r.category = ruleCat; r.suggested_reply = ''; }   // don't let the email steer the outcome
 return [{ json: { ...msg, ...r } }];
 """), (660, 300))
 w.node("Create helpdesk ticket", HTTP, 4.2, http("POST", "/helpdesk/tickets",
-       body="={{ JSON.stringify({ requester: $json.from, subject: $json.subject, description: $json.text, category: $json.category, priority: $json.priority, sentiment: $json.sentiment, ai_summary: $json.summary, draft_reply: $json.suggested_reply, triaged_by: $json.triaged_by, tags: ['auto-triaged'] }) }}"),
+       body="={{ JSON.stringify({ requester: $json.from, subject: $json.subject, description: $json.text, category: $json.category, priority: $json.priority, sentiment: $json.sentiment, ai_summary: $json.summary, draft_reply: $json.suggested_reply, triaged_by: $json.triaged_by, tags: $json.needs_human_review ? ['auto-triaged', 'possible-prompt-injection', 'needs-review'] : ['auto-triaged'] }) }}"),
        (880, 300))
 w.node("Urgent?", IF, 1, if_true("={{ $('Check AI result').first().json.priority === 'urgent' }}"), (1100, 300))
 w.node("Alert on-call channel", HTTP, 4.2, http("POST", "/chat/webhook",
