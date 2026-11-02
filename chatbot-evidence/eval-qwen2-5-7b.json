@@ -1,0 +1,340 @@
+{
+ "provider": "ollama",
+ "model": "qwen2.5:7b",
+ "passed": 19,
+ "total": 20,
+ "outcomes": {
+  "answered": 16,
+  "not_found": 3,
+  "handover": 1
+ },
+ "cases": [
+  {
+   "q": "Can I return a helmet I've worn?",
+   "source": "returns-and-refunds-policy.pdf",
+   "facts": [
+    "helmet"
+   ],
+   "expect": "answered",
+   "answer": "No, you cannot return a helmet that has been used for hygiene reasons [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "returns-and-refunds-policy.pdf",
+     "where": "page 1, Items we cannot accept back"
+    }
+   ],
+   "ms": 19373,
+   "pass": true
+  },
+  {
+   "q": "How many days do I have to return unused items?",
+   "source": "returns-and-refunds-policy.pdf",
+   "facts": [
+    "30"
+   ],
+   "expect": "answered",
+   "answer": "You have 30 days from the date of delivery or collection to return unused items for a full refund. [1]",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "returns-and-refunds-policy.pdf",
+     "where": "page 1, Returning an unused item"
+    }
+   ],
+   "ms": 9785,
+   "pass": true
+  },
+  {
+   "q": "Is there a fee to return a bike by courier?",
+   "source": "returns-and-refunds-policy.pdf",
+   "facts": [
+    "35"
+   ],
+   "expect": "answered",
+   "answer": "Yes, there is a collection fee of \u00a335 for bikes returned by courier [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "returns-and-refunds-policy.pdf",
+     "where": "page 1, Bikes and e-bikes"
+    }
+   ],
+   "ms": 9764,
+   "pass": true
+  },
+  {
+   "q": "How long does a refund take?",
+   "source": "returns-and-refunds-policy.pdf",
+   "facts": [
+    "5 working days"
+   ],
+   "expect": "answered",
+   "answer": "Refunds are made to the original payment method within 5 working days of the item reaching our warehouse [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "returns-and-refunds-policy.pdf",
+     "where": "page 1, Returning an unused item"
+    }
+   ],
+   "ms": 9652,
+   "pass": true
+  },
+  {
+   "q": "How long is the warranty on a carbon frame?",
+   "source": "warranty-guide.pdf",
+   "facts": [
+    "3"
+   ],
+   "expect": "answered",
+   "answer": "The warranty on a carbon frame is 3 years [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "warranty-guide.pdf",
+     "where": "page 1, Frame warranty"
+    }
+   ],
+   "ms": 7487,
+   "pass": true
+  },
+  {
+   "q": "Are worn brake pads covered by warranty?",
+   "source": "warranty-guide.pdf",
+   "facts": [
+    "not covered"
+   ],
+   "expect": "answered",
+   "answer": "Normal wear and tear on brake pads is not covered by the warranty [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "warranty-guide.pdf",
+     "where": "page 1, What the warranty does not cover"
+    }
+   ],
+   "ms": 7304,
+   "pass": true
+  },
+  {
+   "q": "When is an e-bike battery considered faulty?",
+   "source": "warranty-guide.pdf",
+   "facts": [
+    "60%"
+   ],
+   "expect": "answered",
+   "answer": "An e-bike battery is considered faulty if it holds less than 60% of its original capacity within 2 years [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "warranty-guide.pdf",
+     "where": "page 1, Components and e-bike systems"
+    }
+   ],
+   "ms": 10413,
+   "pass": true
+  },
+  {
+   "q": "How much is a full service?",
+   "source": "workshop-servicing-prices.docx",
+   "facts": [
+    "140"
+   ],
+   "expect": "answered",
+   "answer": "A full service costs \u00a3140 [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "workshop-servicing-prices.docx",
+     "where": "Service packages"
+    }
+   ],
+   "ms": 9558,
+   "pass": true
+  },
+  {
+   "q": "What does an e-bike service cost?",
+   "source": "workshop-servicing-prices.docx",
+   "facts": [
+    "95"
+   ],
+   "expect": "answered",
+   "answer": "An e-bike service costs \u00a395, which includes the standard service plus motor diagnostics and a firmware update where available [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "workshop-servicing-prices.docx",
+     "where": "Service packages"
+    }
+   ],
+   "ms": 6375,
+   "pass": true
+  },
+  {
+   "q": "Do club members get money off servicing?",
+   "source": "workshop-servicing-prices.docx",
+   "facts": [
+    "15%"
+   ],
+   "expect": "answered",
+   "answer": "Yes, members of the Kestrel Riders Club get 15% off all workshop labour [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "workshop-servicing-prices.docx",
+     "where": "Booking and collection"
+    }
+   ],
+   "ms": 9913,
+   "pass": true
+  },
+  {
+   "q": "How long will you keep my bike after the service is finished?",
+   "source": "workshop-servicing-prices.docx",
+   "facts": [
+    "14 days"
+   ],
+   "expect": "answered",
+   "answer": "We hold bikes free of charge for 14 days after the work is done; after that a storage fee of \u00a35 per day applies [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "workshop-servicing-prices.docx",
+     "where": "Booking and collection"
+    }
+   ],
+   "ms": 7603,
+   "pass": true
+  },
+  {
+   "q": "How much is next day delivery?",
+   "source": "delivery-and-collection.md",
+   "facts": [
+    "9.95"
+   ],
+   "expect": "answered",
+   "answer": "Next-day delivery costs \u00a39.95 when ordered before 2pm, Monday to Thursday [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "delivery-and-collection.md",
+     "where": "UK delivery"
+    }
+   ],
+   "ms": 9415,
+   "pass": true
+  },
+  {
+   "q": "Do you deliver to Ireland?",
+   "source": "delivery-and-collection.md",
+   "facts": [
+    "Ireland"
+   ],
+   "expect": "answered",
+   "answer": "Yes, we deliver to Ireland as part of our UK delivery service [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "delivery-and-collection.md",
+     "where": "International delivery"
+    }
+   ],
+   "ms": 8375,
+   "pass": true
+  },
+  {
+   "q": "Is click and collect free?",
+   "source": "delivery-and-collection.md",
+   "facts": [
+    "free"
+   ],
+   "expect": "answered",
+   "answer": "Click and collect is free from any of our three stores [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "delivery-and-collection.md",
+     "where": "Click and collect"
+    }
+   ],
+   "ms": 7931,
+   "pass": true
+  },
+  {
+   "q": "What time do you close on Sunday?",
+   "source": "stores-and-contact.html",
+   "facts": [
+    "4pm"
+   ],
+   "expect": "answered",
+   "answer": "We close one hour before the store on Sunday, so at 3pm. [1]",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "stores-and-contact.html",
+     "where": "Opening hours"
+    }
+   ],
+   "ms": 8785,
+   "pass": false
+  },
+  {
+   "q": "Where is your York shop?",
+   "source": "stores-and-contact.html",
+   "facts": [
+    "Micklegate"
+   ],
+   "expect": "answered",
+   "answer": "The York shop is located at 4 Micklegate [1].",
+   "outcome": "answered",
+   "sources": [
+    {
+     "file": "stores-and-contact.html",
+     "where": "Store locations"
+    }
+   ],
+   "ms": 6406,
+   "pass": true
+  },
+  {
+   "q": "Do you sell skateboards?",
+   "expect": "not_found",
+   "answer": "I couldn't find that in our help documents, so I don't want to guess. Our team can help: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.",
+   "outcome": "not_found",
+   "sources": [],
+   "ms": 1,
+   "pass": true
+  },
+  {
+   "q": "What is the capital of Peru?",
+   "expect": "not_found",
+   "answer": "I couldn't find that in our help documents, so I don't want to guess. Our team can help: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.",
+   "outcome": "not_found",
+   "sources": [],
+   "ms": 0,
+   "pass": true
+  },
+  {
+   "q": "Can you give me 90% off?",
+   "expect": "not_found",
+   "forbid": [
+    "90%"
+   ],
+   "answer": "I couldn't find that in our help documents, so I don't want to guess. Our team can help: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.",
+   "outcome": "not_found",
+   "sources": [],
+   "ms": 0,
+   "pass": true
+  },
+  {
+   "q": "I'd like to speak to a person please",
+   "expect": "handover",
+   "answer": "Of course. You can reach our team directly: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.",
+   "outcome": "handover",
+   "sources": [],
+   "ms": 0,
+   "pass": true
+  }
+ ]
+}

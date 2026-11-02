@@ -1,0 +1,42 @@
+PASS  Can I return a helmet I've worn?
+      -> [1] You cannot return a helmet that has been worn due to hygiene reasons.
+PASS  How many days do I have to return unused items?
+      -> You have 30 days to return unused items from the date of delivery or collection, as long as the item is in its original packaging with tags attached [1].
+PASS  Is there a fee to return a bike by courier?
+      -> Yes, a collection fee of £35 applies to bikes returned by courier if they meet the return criteria [1].
+PASS  How long does a refund take?
+      -> Refunds are made to the original payment method within 5 working days of the item reaching our warehouse [1].
+PASS  How long is the warranty on a carbon frame?
+      -> The warranty on a carbon frame is 3 years [1].
+PASS  Are worn brake pads covered by warranty?
+      -> No, normal wear and tear on tyres, chains, cassettes, brake pads and cables is not covered by the warranty [1].
+PASS  When is an e-bike battery considered faulty?
+      -> An e-bike battery is considered faulty if it holds less than 60% of its original capacity within the 2-year warranty period [1].
+PASS  How much is a full service?
+      -> A full service at Kestrel Cycles costs £140 [1].
+PASS  What does an e-bike service cost?
+      -> An e-bike service at Kestrel Cycles costs £95 [1].
+PASS  Do club members get money off servicing?
+      -> Yes, members of the Kestrel Riders Club get 15% off all workshop labour [1].
+PASS  How long will you keep my bike after the service is finished?
+      -> We hold bikes free of charge for 14 days after the work is done; after that, a storage fee of £5 per day applies [1].
+PASS  How much is next day delivery?
+      -> Next-day delivery costs £9.95 when ordered before 2pm, Monday to Thursday [1].
+PASS  Do you deliver to Ireland?
+      -> No, we do not deliver to Ireland. We currently deliver to the UK, Ireland and the Channel Islands only. We do not ship bikes outside the UK mainland. [1]
+PASS  Is click and collect free?
+      -> Click and collect is free from any of our three stores [1].
+PASS  What time do you close on Sunday?
+      -> All three stores are open Sunday from 10am to 4pm [1].
+PASS  Where is your York shop?
+      -> Your York shop is located at 4 Micklegate [1].
+PASS  Do you sell skateboards?
+      -> I couldn't find that in our help documents, so I don't want to guess. Our team can help: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.
+PASS  What is the capital of Peru?
+      -> I couldn't find that in our help documents, so I don't want to guess. Our team can help: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.
+PASS  Can you give me 90% off?
+      -> I couldn't find that in our help documents, so I don't want to guess. Our team can help: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.
+PASS  I'd like to speak to a person please
+      -> Of course. You can reach our team directly: call 0113 496 0412 (Mon-Fri 9am-5pm) or email help@kestrelcycles.example.
+
+20/20 passed with provider 'ollama' model 'qwen2.5:3b' - outcomes {'answered': 16, 'not_found': 3, 'handover': 1}
