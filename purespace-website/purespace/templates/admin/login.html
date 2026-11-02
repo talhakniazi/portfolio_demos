@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block main %}
+<div class="login panel">
+  <h1 class="h2">Sign in</h1>
+  <p class="small">For {{ business.short_name }} staff only.</p>
+  {% if error %}<p class="flash flash--error" role="alert">{{ error }}</p>{% endif %}
+  <form method="post" action="{{ url_for('admin.login', next=request.args.get('next')) }}" data-once>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="f-username">Username</label>
+      <input type="text" id="f-username" name="username" value="{{ username }}" autocomplete="username" autocapitalize="none" spellcheck="false" required></div>
+    <div class="field"><label for="f-password">Password</label>
+      <input type="password" id="f-password" name="password" autocomplete="current-password" required></div>
+    <button class="btn btn--primary btn--wide" type="submit">Sign in</button>
+  </form>
+</div>
+{% endblock %}

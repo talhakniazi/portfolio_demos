@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+instance/
+test-results/
+sales-etl/data/warehouse.sqlite
+sales-etl/data/rejected/
+sales-etl/logs/
+sales-etl/reports/
+docs-chatbot/data/
+docs-chatbot/evidence/
+n8n-automations/evidence/

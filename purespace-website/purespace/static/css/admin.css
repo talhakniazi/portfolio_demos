@@ -1,0 +1,53 @@
+/* Admin area - same tokens as the public site, denser layout */
+html:has(body.admin), body.admin { background: var(--mist); min-height: 100vh; }
+.admin-bar { background: var(--ink); color: var(--white); }
+.admin-bar__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); min-height: 3.75rem; flex-wrap: wrap; }
+.admin-bar .logo { color: var(--white); font-size: 1.2rem; }
+.admin-bar .logo small { color: #9fb0c3; }
+.admin-bar nav { display: flex; gap: var(--s4); align-items: center; flex-wrap: wrap; }
+.admin-bar a, .linkbtn { color: var(--white); font-weight: 700; text-decoration: none; font-size: .98rem; }
+.admin-bar a:hover, .linkbtn:hover { text-decoration: underline; }
+.linkbtn { background: none; border: 0; cursor: pointer; font-family: var(--body); padding: 0; }
+.admin-main { padding-block: var(--s6) var(--s8); }
+.panel { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: var(--s5); margin-bottom: var(--s5); }
+.flash { background: var(--ok-bg); border-left: 6px solid var(--green-text); padding: var(--s3) var(--s4); border-radius: 10px; margin-bottom: var(--s4); }
+.flash--error { background: var(--err-bg); border-left-color: var(--red-text); }
+.warn { background: #fff6d6; border-left: 6px solid var(--yellow-deep); padding: var(--s3) var(--s4); border-radius: 10px; margin-bottom: var(--s4); font-size: 1rem; }
+.stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s3); margin-bottom: var(--s5); }
+.stat { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: var(--s3) var(--s4); text-decoration: none; color: var(--ink); }
+.stat b { display: block; font: 800 1.8rem/1.1 var(--display); }
+.stat span { font-size: .9rem; color: var(--ink-2); }
+.stat[aria-current="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.filters { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: flex-end; margin-bottom: var(--s4); }
+.filters .field { margin: 0; }
+.filters input[type=search] { width: 21rem; max-width: 100%; }
+.filters input, .filters select { min-height: 2.6rem; padding: .45rem .6rem; font-size: 1rem; }
+.filters .btn { min-height: 2.6rem; padding: .45rem 1rem; font-size: 1rem; }
+.admin table { font-size: .98rem; }
+.admin td a { font-weight: 700; }
+.badge { display: inline-block; padding: .15rem .6rem; border-radius: 999px; font-size: .85rem; font-weight: 700; background: var(--mist-2); white-space: nowrap; }
+.badge--new { background: #dbe7fb; color: var(--blue-text); }
+.badge--contacted, .badge--quoted { background: #fff1c4; color: var(--yellow-deep); }
+.badge--booked { background: var(--ok-bg); color: var(--green-text); }
+.badge--lost, .badge--archived { background: #eceff3; color: var(--ink-3); }
+.pager { display: flex; gap: var(--s3); align-items: center; margin-top: var(--s4); }
+.detail-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s5); align-items: start; }
+.facts--admin { grid-template-columns: 11rem 1fr; }
+.notes { list-style: none; margin: var(--s4) 0 0; padding: 0; }
+.notes li { border-top: 1px solid var(--line); padding: var(--s3) 0; }
+.notes small { color: var(--ink-3); display: block; }
+.login { max-width: 26rem; margin: var(--s8) auto; }
+.empty { text-align: center; padding: var(--s7) var(--s4); color: var(--ink-2); }
+@media (max-width: 900px) {
+  .admin-bar nav { gap: var(--s3); font-size: .92rem; }
+  .filters .field { flex: 1 1 100%; }
+  .filters input[type=search], .filters select { width: 100%; }
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .detail-grid { grid-template-columns: 1fr; }
+  .admin table.responsive thead { display: none; }
+  .admin table.responsive tr { display: block; border-bottom: 1px solid var(--line); padding: var(--s3) var(--s4); }
+  .admin table.responsive td { display: flex; justify-content: space-between; gap: var(--s4); border: 0; padding: .2rem 0; text-align: right; }
+  .admin table.responsive td::before { content: attr(data-label); font-weight: 700; text-align: left; color: var(--ink-2); }
+  .facts--admin { grid-template-columns: 1fr; gap: 0; }
+  .facts--admin dd { margin-bottom: var(--s3); }
+}

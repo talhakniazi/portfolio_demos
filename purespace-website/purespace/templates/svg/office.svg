@@ -1,0 +1,16 @@
+<svg viewBox="0 0 420 260" role="img" aria-label="A clean office desk with a monitor, chair and plant in front of large windows" xmlns="http://www.w3.org/2000/svg">
+  <rect x="24" y="16" width="372" height="130" rx="6" fill="#ffffff" stroke="#14284b" stroke-width="4"/>
+  <path d="M117 16v130M210 16v130M303 16v130" stroke="#14284b" stroke-width="3" opacity=".5"/>
+  <path d="M40 96h60v50H40zM230 70h56v76h-56zM320 100h60v46h-60z" fill="#d3dde6"/>
+  <rect x="120" y="96" width="140" height="80" rx="8" fill="#14284b"/>
+  <rect x="130" y="106" width="120" height="58" rx="4" fill="#2f6fdb"/>
+  <path d="M142 122h60M142 134h90M142 146h40" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+  <path d="M182 176h16v18h-16z" fill="#14284b"/>
+  <rect x="60" y="192" width="300" height="14" rx="4" fill="#14284b"/>
+  <path d="M80 206v34M340 206v34" stroke="#14284b" stroke-width="6" stroke-linecap="round"/>
+  <rect x="280" y="164" width="44" height="28" rx="4" fill="#f2c12e"/>
+  <path d="M286 172h32M286 180h20" stroke="#14284b" stroke-width="3" stroke-linecap="round"/>
+  <path d="M100 192l6-26h28l6 26z" fill="#d6453d"/>
+  <path d="M120 166c-2-18-18-22-22-32 12 0 20 8 22 20 2-14 8-26 20-30-2 14-10 26-16 34" fill="#25935f"/>
+  <path d="M18 244h384" stroke="#14284b" stroke-width="4" stroke-linecap="round"/>
+</svg>

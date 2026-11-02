@@ -1,0 +1,22 @@
+[
+ {"q": "Can I return a helmet I've worn?", "source": "returns-and-refunds-policy.pdf", "facts": ["helmet"], "expect": "answered"},
+ {"q": "How many days do I have to return unused items?", "source": "returns-and-refunds-policy.pdf", "facts": ["30"], "expect": "answered"},
+ {"q": "Is there a fee to return a bike by courier?", "source": "returns-and-refunds-policy.pdf", "facts": ["35"], "expect": "answered"},
+ {"q": "How long does a refund take?", "source": "returns-and-refunds-policy.pdf", "facts": ["5 working days"], "expect": "answered"},
+ {"q": "How long is the warranty on a carbon frame?", "source": "warranty-guide.pdf", "facts": ["3"], "expect": "answered"},
+ {"q": "Are worn brake pads covered by warranty?", "source": "warranty-guide.pdf", "facts": ["not covered"], "expect": "answered"},
+ {"q": "When is an e-bike battery considered faulty?", "source": "warranty-guide.pdf", "facts": ["60%"], "expect": "answered"},
+ {"q": "How much is a full service?", "source": "workshop-servicing-prices.docx", "facts": ["140"], "expect": "answered"},
+ {"q": "What does an e-bike service cost?", "source": "workshop-servicing-prices.docx", "facts": ["95"], "expect": "answered"},
+ {"q": "Do club members get money off servicing?", "source": "workshop-servicing-prices.docx", "facts": ["15%"], "expect": "answered"},
+ {"q": "How long will you keep my bike after the service is finished?", "source": "workshop-servicing-prices.docx", "facts": ["14 days"], "expect": "answered"},
+ {"q": "How much is next day delivery?", "source": "delivery-and-collection.md", "facts": ["9.95"], "expect": "answered"},
+ {"q": "Do you deliver to Ireland?", "source": "delivery-and-collection.md", "facts": ["Ireland"], "expect": "answered"},
+ {"q": "Is click and collect free?", "source": "delivery-and-collection.md", "facts": ["free"], "expect": "answered"},
+ {"q": "What time do you close on Sunday?", "source": "stores-and-contact.html", "facts": ["4pm"], "expect": "answered"},
+ {"q": "Where is your York shop?", "source": "stores-and-contact.html", "facts": ["Micklegate"], "expect": "answered"},
+ {"q": "Do you sell skateboards?", "expect": "not_found"},
+ {"q": "What is the capital of Peru?", "expect": "not_found"},
+ {"q": "Can you give me 90% off?", "expect": "not_found", "forbid": ["90%"]},
+ {"q": "I'd like to speak to a person please", "expect": "handover"}
+]

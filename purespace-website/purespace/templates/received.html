@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="section">
+  <div class="wrap received">
+    {% if e %}
+    <div class="received__tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    {% if e.kind == 'quote' %}
+      <h1>Thanks{% if e.name %}, {{ e.name }}{% endif %}. We've got your quote request.</h1>
+      <p class="lead">We'll {{ {'email': 'email you', 'phone': 'call you', 'whatsapp': 'message you on WhatsApp'}[e.contact_pref or 'email'] }} within one working day to confirm your price.</p>
+    {% else %}
+      <h1>Thanks{% if e.name %}, {{ e.name }}{% endif %}. Your message has been sent.</h1>
+      <p class="lead">We'll reply within one working day.</p>
+    {% endif %}
+    {% if e.ref %}
+      <p>Your reference is<br><span class="ref">{{ e.ref }}</span></p>
+      {% if e.summary %}<h2 class="h3">What you asked for</h2><ul class="summary">{% for line in e.summary %}<li>{{ line }}</li>{% endfor %}</ul>{% endif %}
+    {% endif %}
+    {% else %}
+      <h1>Nothing to show here</h1>
+      <p class="lead">This page confirms a request once it's been sent. If you've already sent one, we've got it and will be in touch.</p>
+    {% endif %}
+    <div class="btn-row">
+      <a class="btn btn--primary" href="{{ url_for('public.home') }}">Back to the home page</a>
+      <a class="btn btn--ghost" href="tel:{{ business.phone_link }}">Call {{ business.phone }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

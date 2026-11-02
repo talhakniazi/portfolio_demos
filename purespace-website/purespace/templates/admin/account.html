@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% block title %}Change password{% endblock %}
+{% block main %}
+<div class="login panel">
+  <h1 class="h2">Change password</h1>
+  {% if error %}<p class="flash flash--error" role="alert">{{ error }}</p>{% endif %}
+  <form method="post" action="{{ url_for('admin.account') }}" data-once>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="f-current">Current password</label><input type="password" id="f-current" name="current" autocomplete="current-password" required></div>
+    <div class="field"><label for="f-new">New password</label><span class="hint" id="new-hint">At least 12 characters, with upper- and lower-case letters and a number.</span>
+      <input type="password" id="f-new" name="new" autocomplete="new-password" required aria-describedby="new-hint"></div>
+    <div class="field"><label for="f-again">New password again</label><input type="password" id="f-again" name="again" autocomplete="new-password" required></div>
+    <button class="btn btn--primary btn--wide" type="submit">Change password</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+__pycache__/
+data/warehouse.sqlite
+data/rejected/
+logs/
+reports/
+.pytest_cache/

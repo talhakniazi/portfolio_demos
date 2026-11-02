@@ -1,0 +1,26 @@
+{# Accessible form helpers: label, hint, error message linked by aria-describedby #}
+{% macro describedby(name, hint, errors) -%}
+{%- set ids = [] -%}{%- if hint %}{% set _ = ids.append(name ~ '-hint') %}{% endif -%}{%- if errors.get(name) %}{% set _ = ids.append(name ~ '-error') %}{% endif -%}
+{%- if ids %} aria-describedby="{{ ids | join(' ') }}"{% endif %}{% if errors.get(name) %} aria-invalid="true"{% endif -%}
+{%- endmacro %}
+
+{% macro field(name, label, form, errors, type='text', hint=None, autocomplete=None, cls='', required=True, extra='') %}
+<div class="field{% if errors.get(name) %} field--error{% endif %}">
+  <label for="f-{{ name }}">{{ label }}{% if not required %} <span class="muted">(optional)</span>{% endif %}</label>
+  {% if hint %}<span class="hint" id="{{ name }}-hint">{{ hint }}</span>{% endif %}
+  {% if errors.get(name) %}<span class="error-msg" id="{{ name }}-error"><span class="visually-hidden">Error:</span> {{ errors[name] }}</span>{% endif %}
+  <input class="{{ cls }}" type="{{ type }}" id="f-{{ name }}" name="{{ name }}" value="{{ form.get(name, '') }}"
+         {%- if autocomplete %} autocomplete="{{ autocomplete }}"{% endif %}{% if required %} required{% endif %} {{ extra | safe }}{{ describedby(name, hint, errors) }}>
+</div>
+{% endmacro %}
+
+{% macro error_summary(errors) %}
+{% if errors %}
+<div class="notice notice--error" role="alert" tabindex="-1" id="error-summary">
+  <h2>Please check {{ 'this' if errors|length == 1 else 'these ' ~ errors|length ~ ' things' }}</h2>
+  <ul>{% for k, v in errors.items() %}<li><a href="#f-{{ k }}">{{ v }}</a></li>{% endfor %}</ul>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro stripes() %}<div class="stripes" aria-hidden="true"><span class="c-blue"></span><span class="c-green"></span><span class="c-red"></span><span class="c-yellow"></span></div>{% endmacro %}

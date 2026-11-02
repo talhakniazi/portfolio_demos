@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / Privacy notice</p>
+    <h1>Privacy notice</h1>
+    <p class="lead">What we do with the details you send us through this website.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap prose">
+    <h2>Who we are</h2>
+    <p>{{ business.name }} ("we") is responsible for the personal data described here. Contact us at <a href="mailto:{{ business.email }}">{{ business.email }}</a> or {{ business.address | join(', ') }}.</p>
+    <h2>What we collect</h2>
+    <ul>
+      <li>When you ask for a quote: your name, email, phone number (if given), the postcode and details of the property, and anything you write to us.</li>
+      <li>When you send a message: your name, email, phone number (if given) and your message.</li>
+      <li>To stop abuse of our forms we keep a scrambled code made from your internet address. We cannot turn it back into the address.</li>
+    </ul>
+    <h2>Why we use it</h2>
+    <p>Only to reply to you, prepare your quote and, if you book, provide the cleaning. Our lawful basis is taking steps at your request before entering into a contract (UK GDPR Article 6(1)(b)). We do not sell your details or use them for marketing unless you ask us to.</p>
+    <h2>How long we keep it</h2>
+    <p>Enquiries that don't lead to a booking are deleted within 12 months. If you become a customer, we keep records for as long as needed for the service and for 6 years afterwards for tax purposes.</p>
+    <h2>Cookies</h2>
+    <p>This website sets one cookie, which is needed to keep your form secure and is deleted when you close your browser. We do not use tracking or advertising cookies, and the website does not load anything from other companies.</p>
+    <h2>Your rights</h2>
+    <p>You can ask for a copy of your details, ask us to correct them, or ask us to delete them, by emailing us. If you're unhappy with how we've handled your data you can complain to the Information Commissioner's Office at ico.org.uk.</p>
+  </div>
+</section>
+{% endblock %}

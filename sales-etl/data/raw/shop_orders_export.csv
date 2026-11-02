@@ -1,0 +1,179 @@
+﻿Order #,Order Date,Customer,SKU,Item,Qty,Unit Price,Status
+SH-1047,09-10-26,Northgate Canteen,HL-FRK-WD,Wooden fork (x100),3,£4.60 ,Paid
+SH-1066,12 Oct 2026,Harbour Fish Bar,HL-CUP-08,Compostable cup 8oz (x50),1,GBP 5.40,Paid
+SH-1115,23-10-26,Pip's Pantry,HL-CUP-12,Compostable cup 12oz (x50),3,£6.50 ,Refunded
+SH-1088,17/10/2026,Station Road Takeaway,HL-SPN-WD,Wooden spoon (x100),1,£4.60,Paid
+SH-1132,25/10/2026,Quayside Deli,HL-NAP-WH,White napkins (x500),1,£8.75,Paid
+SH-1153,2026-10-29,Northgate Canteen,HL-BAG-KR,Kraft carrier bag (x100),3,13.90,Paid
+SH-1165,2026-10-30,Old Mill Tearoom,HL-ROL-TL,Till rolls 57mm (x20),6,10.80,Paid
+SH-1119,24-10-26,The Little Bakehouse,hl-lid-12,Sip lid 12oz (x50),2,£2.90 ,Paid
+SH-1052,10/10/2026,Northgate Canteen,HL-SAN-5L,Surface sanitiser 5L,6,£15.50,Paid
+SH-1072,14/10/2026,Greenleaf Juice Co,HL-LID-12,Sip lid 12oz (x50),3,£2.90,Paid
+SH-1152,29/10/2026,Quayside Deli,HL-ROL-TL,Till rolls 57mm (x20),4,£10.80,Paid
+SH-1129,2026-10-25,Old Mill Tearoom,HL-FRK-WD,Wooden fork (x100),6,4.60,Paid
+SH-1161,2026-10-30,Old Mill Tearoom,hl-glv-nt,Nitrile gloves L (x100),1,7.95,Refunded
+SH-1142,27 Oct 2026,Old Mill Tearoom,HL-SPN-WD,Wooden spoon (x100),3,GBP 4.60,Paid
+SH-1025,2026-10-04,Bean & Barrel Cafe,HL-BAG-KR,Kraft carrier bag (x100),4,13.90,Paid
+SH-1137,2026-10-26,Old Mill Tearoom,HL-SPN-WD,Wooden spoon (x100),1,4.60,Paid
+SH-1156,29/10/2026,Greenleaf Juice Co,HL-ROL-TL,Till rolls 57mm (x20),1,£10.80,Paid
+SH-1064,12/10/2026,Northgate Canteen,HL-ROL-TL,Till rolls 57mm (x20),10,£10.80,Paid
+SH-1050,09 Oct 2026,The Little Bakehouse,HL-CUP-08,Compostable cup 8oz (x50),2,GBP 5.40,Paid
+SH-1149,2026-10-28,Northgate Canteen,HL-GLV-NT,Nitrile gloves L (x100),10,7.95,Paid
+SH-1013,2026-10-03,Greenleaf Juice Co,HL-NAP-WH,White napkins (x500),1,8.75,Paid
+SH-1090,18 Oct 2026,Ferry Street Kitchen,HL-SPN-WD,Wooden spoon (x100),4,GBP 4.60,Paid
+SH-1019,03-10-26,Greenleaf Juice Co,HL-SPN-WD,Wooden spoon (x100),3,£4.60 ,Paid
+SH-1069,2026-10-13,Quayside Deli,HL-SPN-WD,Wooden spoon (x100),4,4.60,Refunded
+SH-1062,11 Oct 2026,Greenleaf Juice Co,HL-BAG-KR,Kraft carrier bag (x100),3,GBP 13.90,Paid
+SH-1151,28-10-26,Old Mill Tearoom,HL-CUP-08,Compostable cup 8oz (x50),3,£5.40 ,Paid
+SH-1116,23/10/2026,Northgate Canteen,HL-CUP-12,Compostable cup 12oz (x50),4,£6.50,Paid
+SH-1082,15 Oct 2026,Northgate Canteen,HL-BAG-KR,Kraft carrier bag (x100),3,GBP 13.90,Paid
+SH-1071,13-10-26,The Little Bakehouse,HL-SAN-5L,Surface sanitiser 5L,10,£15.50 ,Paid
+SH-1147,28-10-26,Station Road Takeaway,hl-bag-kr,Kraft carrier bag (x100),6,£13.90 ,Paid
+SH-1065,2026-10-12,Northgate Canteen,HL-GLV-NT,Nitrile gloves L (x100),6,7.95,Paid
+,,,,,,,
+SH-1076,14/10/2026,Harbour Fish Bar,HL-BAG-KR,Kraft carrier bag (x100),2,£13.90,Paid
+SH-1038,07 Oct 2026,Quayside Deli,HL-SAN-5L,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1117,2026-10-23,Pip's Pantry,HL-BAG-KR,Kraft carrier bag (x100),1,13.90,Paid
+SH-1056,10/10/2026,Quayside Deli,hl-bag-kr,Kraft carrier bag (x100),2,£13.90,Paid
+SH-1089,2026-10-17,Station Road Takeaway,HL-BAG-KR,Kraft carrier bag (x100),1,13.90,Paid
+SH-1058,10 Oct 2026,Station Road Takeaway,HL-SAN-5L,Surface sanitiser 5L,2,GBP 15.50,Paid
+SH-1018,03 Oct 2026,Quayside Deli,HL-CUP-08,Compostable cup 8oz (x50),2,GBP 5.40,Paid
+SH-1154,29 Oct 2026,Bean & Barrel Cafe,hl-bag-kr,Kraft carrier bag (x100),2,GBP 13.90,Paid
+SH-1012,02/10/2026,Pip's Pantry,HL-CUP-08,Compostable cup 8oz (x50),4,£5.40,Paid
+SH-1046,09 Oct 2026,Quayside Deli,HL-GLV-NT,Nitrile gloves L (x100),1,GBP 7.95,Refunded
+SH-1068,13/10/2026,Bean & Barrel Cafe,HL-CUP-12,Compostable cup 12oz (x50),1,£6.50,Paid
+SH-1030,05 Oct 2026,The Little Bakehouse,HL-LID-12,Sip lid 12oz (x50),3,GBP 2.90,Paid
+SH-1041,2026-10-07,Bean & Barrel Cafe,HL-LID-12,Sip lid 12oz (x50),10,2.90,Paid
+SH-1170,31 Oct 2026,Ferry Street Kitchen,HL-NAP-WH,White napkins (x500),2,GBP 8.75,Paid
+SH-1144,27/10/2026,Station Road Takeaway,HL-SPN-WD,Wooden spoon (x100),2,£4.60,Paid
+SH-1102,20 Oct 2026,The Little Bakehouse,HL-NAP-WH,White napkins (x500),1,GBP 8.75,Paid
+SH-1067,13-10-26,Greenleaf Juice Co,HL-SPN-WD,Wooden spoon (x100),6,£4.60 ,Paid
+SH-1027,04-10-26,Quayside Deli,HL-SPN-WD,Wooden spoon (x100),3,£4.60 ,Paid
+SH-1001,2026-10-01,Ferry Street Kitchen,HL-CUP-08,Compostable cup 8oz (x50),1,5.40,Paid
+SH-1079,15-10-26,Ferry Street Kitchen,HL-CUP-12,Compostable cup 12oz (x50),6,£6.50 ,Paid
+SH-1118,23 Oct 2026,Station Road Takeaway,HL-SAN-5L,Surface sanitiser 5L,6,GBP 15.50,Paid
+SH-1081,2026-10-15,The Little Bakehouse,HL-SAN-5L,Surface sanitiser 5L,10,15.50,Paid
+SH-1005,2026-10-01,Northgate Canteen,HL-CUP-08,Compostable cup 8oz (x50),2,5.40,Paid
+SH-1141,2026-10-26,Harbour Fish Bar,HL-NAP-WH,White napkins (x500),3,8.75,Paid
+SH-1136,26/10/2026,Bean & Barrel Cafe,HL-BAG-KR,Kraft carrier bag (x100),3,£13.90,Paid
+SH-1083,15-10-26,Pip's Pantry,HL-CUP-12,Compostable cup 12oz (x50),1,£6.50 ,Paid
+SH-1128,25/10/2026,Ferry Street Kitchen,HL-NAP-WH,White napkins (x500),1,£8.75,Paid
+SH-1023,04-10-26,Greenleaf Juice Co,HL-BAG-KR,Kraft carrier bag (x100),2,£13.90 ,Refunded
+SH-1092,18/10/2026,The Little Bakehouse,HL-NAP-WH,White napkins (x500),6,£8.75,Refunded
+SH-1063,12-10-26,Station Road Takeaway,hl-san-5l,Surface sanitiser 5L,2,£15.50 ,Paid
+SH-1037,2026-10-06,Old Mill Tearoom,HL-SPN-WD,Wooden spoon (x100),10,4.60,Paid
+SH-1103,20-10-26,Quayside Deli,HL-NAP-WH,White napkins (x500),1,£8.75 ,Paid
+SH-1162,30 Oct 2026,Greenleaf Juice Co,HL-BAG-KR,Kraft carrier bag (x100),1,GBP 13.90,Paid
+SH-9001,02-10-26,Harbour Fish Bar,HL-CUP-08,Compostable cup 8oz (x50),two,£5.40 ,Paid
+SH-1074,14 Oct 2026,Bean & Barrel Cafe,HL-SAN-5L,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1094,19 Oct 2026,Greenleaf Juice Co,HL-CUP-08,Compostable cup 8oz (x50),1,GBP 5.40,Paid
+SH-1010,02 Oct 2026,Pip's Pantry,HL-LID-12,Sip lid 12oz (x50),2,GBP 2.90,Paid
+SH-1093,2026-10-19,Pip's Pantry,HL-NAP-WH,White napkins (x500),10,8.75,Paid
+SH-1051,10-10-26,Ferry Street Kitchen,HL-GLV-NT,Nitrile gloves L (x100),2,£7.95 ,Paid
+SH-1114,22 Oct 2026,Harbour Fish Bar,HL-ROL-TL,Till rolls 57mm (x20),2,GBP 10.80,Paid
+SH-1075,14-10-26,Quayside Deli,HL-SAN-5L,Surface sanitiser 5L,1,£15.50 ,Paid
+SH-1095,19-10-26,Quayside Deli,HL-ROL-TL,Till rolls 57mm (x20),1,£10.80 ,Paid
+SH-1014,03 Oct 2026,Harbour Fish Bar,hl-san-5l,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1171,31-10-26,Old Mill Tearoom,HL-FRK-WD,Wooden fork (x100),4,£4.60 ,Paid
+SH-9003,2026-10-03,Greenleaf Juice Co,HL-UNKNOWN,White napkins (x500),1,8.75,Paid
+SH-1166,31 Oct 2026,Greenleaf Juice Co,HL-LID-12,Sip lid 12oz (x50),10,GBP 2.90,Paid
+SH-1078,15 Oct 2026,Harbour Fish Bar,HL-CUP-12,Compostable cup 12oz (x50),2,GBP 6.50,Paid
+SH-1130,25 Oct 2026,Quayside Deli,HL-FRK-WD,Wooden fork (x100),1,GBP 4.60,Paid
+SH-1048,09/10/2026,Station Road Takeaway,HL-CUP-12,Compostable cup 12oz (x50),2,£6.50,Paid
+SH-1109,2026-10-21,The Little Bakehouse,HL-CUP-12,Compostable cup 12oz (x50),4,6.50,Paid
+SH-1126,24 Oct 2026,Bean & Barrel Cafe,hl-bag-kr,Kraft carrier bag (x100),2,GBP 13.90,Paid
+SH-1135,26-10-26,Station Road Takeaway,HL-CUP-08,Compostable cup 8oz (x50),6,£5.40 ,Paid
+SH-1073,2026-10-14,Greenleaf Juice Co,HL-BAG-KR,Kraft carrier bag (x100),1,13.90,Paid
+SH-1015,03-10-26,Station Road Takeaway,HL-CUP-08,Compostable cup 8oz (x50),3,£5.40 ,Paid
+SH-1086,16 Oct 2026,The Little Bakehouse,HL-SAN-5L,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1106,20 Oct 2026,Old Mill Tearoom,HL-BAG-KR,Kraft carrier bag (x100),3,GBP 13.90,Paid
+SH-1169,2026-10-31,Quayside Deli,HL-NAP-WH,White napkins (x500),10,8.75,Paid
+SH-1031,05-10-26,Station Road Takeaway,HL-BAG-KR,Kraft carrier bag (x100),3,£13.90 ,Paid
+SH-1020,04/10/2026,Pip's Pantry,HL-FRK-WD,Wooden fork (x100),2,£4.60,Paid
+SH-1080,15/10/2026,Harbour Fish Bar,HL-GLV-NT,Nitrile gloves L (x100),3,£7.95,Paid
+,,,,,,,
+SH-1167,31-10-26,Ferry Street Kitchen,HL-NAP-WH,White napkins (x500),2,£8.75 ,Paid
+SH-1026,04 Oct 2026,Pip's Pantry,HL-BAG-KR,Kraft carrier bag (x100),1,GBP 13.90,Paid
+SH-1032,06/10/2026,Pip's Pantry,HL-ROL-TL,Till rolls 57mm (x20),6,£10.80,Paid
+SH-1004,01/10/2026,Bean & Barrel Cafe,HL-SPN-WD,Wooden spoon (x100),1,£4.60,Paid
+SH-1157,2026-10-29,Harbour Fish Bar,HL-SPN-WD,Wooden spoon (x100),2,4.60,Paid
+SH-1006,01 Oct 2026,Old Mill Tearoom,HL-SAN-5L,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1009,2026-10-02,Ferry Street Kitchen,HL-SPN-WD,Wooden spoon (x100),4,4.60,Paid
+SH-1084,16/10/2026,Old Mill Tearoom,hl-cup-12,Compostable cup 12oz (x50),10,£6.50,Paid
+SH-1029,2026-10-05,Greenleaf Juice Co,HL-GLV-NT,Nitrile gloves L (x100),6,7.95,Paid
+SH-1045,2026-10-08,Station Road Takeaway,HL-SAN-5L,Surface sanitiser 5L,1,15.50,Paid
+SH-1124,24/10/2026,Northgate Canteen,HL-GLV-NT,Nitrile gloves L (x100),2,£7.95,Paid
+SH-1143,27-10-26,Harbour Fish Bar,HL-LID-12,Sip lid 12oz (x50),2,£2.90 ,Paid
+SH-1096,19/10/2026,Old Mill Tearoom,HL-SAN-5L,Surface sanitiser 5L,2,£15.50,Paid
+SH-1003,01-10-26,Station Road Takeaway,HL-CUP-08,Compostable cup 8oz (x50),1,£5.40 ,Paid
+SH-1061,2026-10-11,Old Mill Tearoom,HL-FRK-WD,Wooden fork (x100),1,4.60,Paid
+SH-1011,02-10-26,Harbour Fish Bar,HL-CUP-08,Compostable cup 8oz (x50),1,£5.40 ,Paid
+SH-1127,25-10-26,Pip's Pantry,HL-BAG-KR,Kraft carrier bag (x100),6,£13.90 ,Paid
+SH-1134,25 Oct 2026,Station Road Takeaway,HL-FRK-WD,Wooden fork (x100),6,GBP 4.60,Paid
+SH-1054,10 Oct 2026,Greenleaf Juice Co,HL-SPN-WD,Wooden spoon (x100),4,GBP 4.60,Paid
+SH-1163,30-10-26,Old Mill Tearoom,HL-LID-12,Sip lid 12oz (x50),10,£2.90 ,Paid
+SH-1097,2026-10-19,Pip's Pantry,HL-NAP-WH,White napkins (x500),2,8.75,Paid
+SH-9002,31/13/2026,Pip's Pantry,HL-CUP-08,Compostable cup 8oz (x50),4,£5.40,Paid
+SH-1122,24 Oct 2026,The Little Bakehouse,HL-BAG-KR,Kraft carrier bag (x100),3,GBP 13.90,Paid
+SH-1113,2026-10-22,Pip's Pantry,HL-SAN-5L,Surface sanitiser 5L,1,15.50,Paid
+SH-1155,29-10-26,Greenleaf Juice Co,HL-CUP-12,Compostable cup 12oz (x50),2,£6.50 ,Paid
+SH-1044,08/10/2026,Old Mill Tearoom,HL-FRK-WD,Wooden fork (x100),2,£4.60,Paid
+SH-1121,2026-10-24,Harbour Fish Bar,HL-LID-12,Sip lid 12oz (x50),4,2.90,Paid
+SH-1059,11-10-26,Bean & Barrel Cafe,HL-CUP-12,Compostable cup 12oz (x50),1,£6.50 ,Paid
+SH-1028,05/10/2026,Northgate Canteen,hl-rol-tl,Till rolls 57mm (x20),4,£10.80,Paid
+SH-1042,07 Oct 2026,Old Mill Tearoom,hl-nap-wh,White napkins (x500),2,GBP 8.75,Paid
+SH-1049,2026-10-09,Greenleaf Juice Co,hl-cup-08,Compostable cup 8oz (x50),1,5.40,Paid
+SH-1034,06 Oct 2026,Bean & Barrel Cafe,HL-GLV-NT,Nitrile gloves L (x100),1,GBP 7.95,Paid
+SH-1131,25-10-26,Station Road Takeaway,HL-NAP-WH,White napkins (x500),2,£8.75 ,Paid
+SH-1024,04/10/2026,Old Mill Tearoom,HL-SPN-WD,Wooden spoon (x100),3,£4.60,Paid
+SH-1041,2026-10-07,Bean & Barrel Cafe,HL-LID-12,Sip lid 12oz (x50),10,2.90,Paid
+SH-1111,21-10-26,Old Mill Tearoom,HL-SAN-5L,Surface sanitiser 5L,6,£15.50 ,Paid
+SH-1035,06-10-26,The Little Bakehouse,hl-cup-08,Compostable cup 8oz (x50),2,£5.40 ,Paid
+SH-1110,21 Oct 2026,Greenleaf Juice Co,HL-NAP-WH,White napkins (x500),2,GBP 8.75,Paid
+SH-1022,04 Oct 2026,Old Mill Tearoom,HL-CUP-08,Compostable cup 8oz (x50),2,GBP 5.40,Paid
+SH-1133,2026-10-25,Pip's Pantry,hl-rol-tl,Till rolls 57mm (x20),6,10.80,Paid
+SH-1101,2026-10-20,Old Mill Tearoom,HL-SAN-5L,Surface sanitiser 5L,1,15.50,Paid
+SH-1007,01-10-26,Northgate Canteen,hl-bag-kr,Kraft carrier bag (x100),6,£13.90 ,Paid
+SH-1033,2026-10-06,Old Mill Tearoom,HL-BAG-KR,Kraft carrier bag (x100),2,13.90,Paid
+SH-1164,30/10/2026,Greenleaf Juice Co,HL-SAN-5L,Surface sanitiser 5L,4,£15.50,Paid
+SH-1043,08-10-26,The Little Bakehouse,HL-NAP-WH,White napkins (x500),2,£8.75 ,Paid
+SH-1104,20/10/2026,Ferry Street Kitchen,HL-SAN-5L,Surface sanitiser 5L,2,£15.50,Paid
+SH-1087,17-10-26,Northgate Canteen,HL-ROL-TL,Till rolls 57mm (x20),1,£10.80 ,Paid
+SH-1158,29 Oct 2026,Northgate Canteen,HL-GLV-NT,Nitrile gloves L (x100),6,GBP 7.95,Paid
+SH-1008,01/10/2026,Bean & Barrel Cafe,HL-GLV-NT,Nitrile gloves L (x100),3,£7.95,Paid
+SH-1145,2026-10-27,Harbour Fish Bar,HL-ROL-TL,Till rolls 57mm (x20),3,10.80,Paid
+SH-1112,22/10/2026,The Little Bakehouse,hl-cup-08,Compostable cup 8oz (x50),1,£5.40,Paid
+SH-1070,13 Oct 2026,Northgate Canteen,hl-bag-kr,Kraft carrier bag (x100),2,GBP 13.90,Paid
+SH-1146,27 Oct 2026,Ferry Street Kitchen,HL-SAN-5L,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1125,2026-10-24,Ferry Street Kitchen,HL-GLV-NT,Nitrile gloves L (x100),4,7.95,Paid
+SH-1057,2026-10-10,Station Road Takeaway,HL-FRK-WD,Wooden fork (x100),1,4.60,Paid
+SH-1140,26/10/2026,Quayside Deli,hl-rol-tl,Till rolls 57mm (x20),4,£10.80,Paid
+SH-1138,26 Oct 2026,Pip's Pantry,HL-SAN-5L,Surface sanitiser 5L,2,GBP 15.50,Refunded
+SH-1160,30/10/2026,Old Mill Tearoom,HL-BAG-KR,Kraft carrier bag (x100),2,£13.90,Paid
+SH-1159,29-10-26,Quayside Deli,HL-LID-12,Sip lid 12oz (x50),1,£2.90 ,Paid
+SH-1077,2026-10-14,Northgate Canteen,hl-glv-nt,Nitrile gloves L (x100),10,7.95,Paid
+SH-1091,18-10-26,Northgate Canteen,hl-bag-kr,Kraft carrier bag (x100),4,£13.90 ,Paid
+SH-1002,01 Oct 2026,The Little Bakehouse,HL-BAG-KR,Kraft carrier bag (x100),2,GBP 13.90,Paid
+SH-1123,24-10-26,Bean & Barrel Cafe,HL-CUP-08,Compostable cup 8oz (x50),6,£5.40 ,Paid
+SH-1098,19 Oct 2026,Pip's Pantry,hl-cup-08,Compostable cup 8oz (x50),2,GBP 5.40,Paid
+SH-1148,28/10/2026,Greenleaf Juice Co,HL-ROL-TL,Till rolls 57mm (x20),4,£10.80,Paid
+SH-1006,01 Oct 2026,Old Mill Tearoom,HL-SAN-5L,Surface sanitiser 5L,1,GBP 15.50,Paid
+SH-1150,28 Oct 2026,The Little Bakehouse,HL-SAN-5L,Surface sanitiser 5L,10,GBP 15.50,Paid
+SH-1100,19/10/2026,Station Road Takeaway,HL-SAN-5L,Surface sanitiser 5L,3,£15.50,Paid
+SH-1108,20/10/2026,Ferry Street Kitchen,HL-CUP-08,Compostable cup 8oz (x50),6,£5.40,Paid
+SH-1053,2026-10-10,Ferry Street Kitchen,HL-SAN-5L,Surface sanitiser 5L,2,15.50,Paid
+SH-1016,03/10/2026,Quayside Deli,HL-FRK-WD,Wooden fork (x100),2,£4.60,Paid
+SH-1168,31/10/2026,Northgate Canteen,hl-san-5l,Surface sanitiser 5L,10,£15.50,Paid
+SH-1120,24/10/2026,Bean & Barrel Cafe,HL-LID-12,Sip lid 12oz (x50),6,£2.90,Paid
+SH-1139,26-10-26,Pip's Pantry,HL-SPN-WD,Wooden spoon (x100),1,£4.60 ,Paid
+SH-1085,2026-10-16,Bean & Barrel Cafe,HL-SAN-5L,Surface sanitiser 5L,2,15.50,Paid
+SH-1105,2026-10-20,Pip's Pantry,hl-nap-wh,White napkins (x500),2,8.75,Paid
+SH-1107,20-10-26,Bean & Barrel Cafe,HL-GLV-NT,Nitrile gloves L (x100),3,£7.95 ,Paid
+SH-1017,2026-10-03,Ferry Street Kitchen,HL-CUP-12,Compostable cup 12oz (x50),2,6.50,Paid
+SH-1055,10-10-26,Quayside Deli,HL-SAN-5L,Surface sanitiser 5L,10,£15.50 ,Paid
+SH-1040,07/10/2026,Harbour Fish Bar,HL-CUP-08,Compostable cup 8oz (x50),3,£5.40,Paid
+SH-1099,19-10-26,Greenleaf Juice Co,HL-NAP-WH,White napkins (x500),2,£8.75 ,Paid
+SH-1060,11/10/2026,Bean & Barrel Cafe,HL-BAG-KR,Kraft carrier bag (x100),1,£13.90,Paid
+SH-1039,07-10-26,Pip's Pantry,HL-SAN-5L,Surface sanitiser 5L,3,£15.50 ,Paid
+SH-1036,06/10/2026,Harbour Fish Bar,HL-SPN-WD,Wooden spoon (x100),1,£4.60,Paid
+SH-1021,2026-10-04,Ferry Street Kitchen,hl-frk-wd,Wooden fork (x100),2,4.60,Paid

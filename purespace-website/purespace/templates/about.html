@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stripes %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / About us</p>
+    <h1>About {{ business.short_name }}</h1>
+    <p class="lead">A local cleaning company that does the job properly, turns up when it says it will, and answers the phone.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap two-col">
+    <div class="prose">
+      <h2>How we started</h2>
+      <p>{{ business.short_name }} began in {{ business.founded }} with two cleaners and a van, cleaning homes in south Manchester. Most of our early customers came through recommendations, and they still do.</p>
+      <p>Today we clean homes, rental properties and offices across {{ business.area }}. We've stayed deliberately local, so a supervisor is never far from any job.</p>
+      <h2>How we work</h2>
+      <p>Every cleaner is employed by us, trained in-house and works to written checklists for each type of clean. We use the professional colour-coded cloth system in every property, and we bring our own eco-friendly products and equipment.</p>
+      <p>If anything isn't right, tell us within 24 hours and we'll come back and put it right free of charge.</p>
+    </div>
+    <div>
+      <ul class="cloth-list">
+        {% for title, text in content.PROMISES %}
+        <li><span class="swatch {{ ['c-blue','c-green','c-red','c-yellow'][loop.index0] }}" aria-hidden="true"></span><div><strong>{{ title }}</strong><span>{{ text }}</span></div></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist" aria-labelledby="details-h">
+  <div class="wrap two-col">
+    <h2 id="details-h">Company details</h2>
+    <dl class="facts">
+      <dt>Registered name</dt><dd>{{ business.name }}</dd>
+      <dt>Company number</dt><dd>{{ business.company_number }}</dd>
+      <dt>Address</dt><dd>{{ business.address | join(', ') }}</dd>
+      <dt>Areas covered</dt><dd>{{ business.area }}</dd>
+      <dt>Phone</dt><dd><a href="tel:{{ business.phone_link }}">{{ business.phone }}</a></dd>
+      <dt>Email</dt><dd><a href="mailto:{{ business.email }}">{{ business.email }}</a></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap"><div class="band"><div><h2>Work with us</h2><p>Get a guide price online, or call us for a chat about what you need.</p></div>
+    <a class="btn btn--light" href="{{ url_for('public.quote') }}">Get a quote</a>{{ stripes() }}</div></div>
+</section>
+{% endblock %}

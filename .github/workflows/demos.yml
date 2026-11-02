@@ -1,0 +1,115 @@
+name: Run portfolio demos
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  python-etl:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        working-directory: sales-etl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt pytest
+      - run: python demo.py
+      - run: python -m pytest -q
+
+  website:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: purespace-website
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Clean install from the README instructions
+        run: |
+          pip install -r requirements-dev.txt && python -m playwright install --with-deps chromium
+          flask --app purespace init-db
+          flask --app purespace create-admin --username owner --password "Ci-Check-Passw0rd"
+          timeout 8 python run.py --port 8000 || test $? -eq 124
+      - run: SCREENSHOTS=1 python -m pytest -q
+
+  chatbot:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs-chatbot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt -r requirements-dev.txt && python -m playwright install --with-deps chromium
+      - name: Unit tests (no AI model needed)
+        run: python -m pytest -q
+      - name: Install a local open-source model (Ollama + Qwen2.5 3B, no API key, no cost)
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          (ollama serve > /tmp/ollama.log 2>&1 &) ; sleep 5
+          ollama pull qwen2.5:3b
+      - name: Evaluate answers with the real model
+        env: { CHATBOT_PROVIDER: ollama, CHATBOT_MODEL: "qwen2.5:3b" }
+        run: |
+          mkdir -p evidence
+          python -m chatbot.cli eval --out evidence/eval-ollama.json | tee evidence/eval-ollama.txt
+      - name: Screenshots of the chat widget
+        env: { CHATBOT_PROVIDER: ollama, CHATBOT_MODEL: "qwen2.5:3b" }
+        run: python scripts/screenshots.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: chatbot-evidence, path: docs-chatbot/evidence }
+
+  n8n:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: n8n-automations
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install flask requests playwright && python -m playwright install --with-deps chromium
+      - name: Local AI model for the triage workflow
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          (OLLAMA_HOST=127.0.0.1:11434 ollama serve > /tmp/ollama.log 2>&1 &) ; sleep 5
+          ollama pull qwen2.5:3b
+      - run: docker pull n8nio/n8n:3.0.1
+      - name: Import, run and test all three workflows in real n8n
+        run: python scripts/run_demo.py --n8n-version 3.0.1
+      - name: Editor screenshots
+        if: always()
+        run: python scripts/screenshots.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: n8n-evidence, path: n8n-automations/evidence }
+
+  publish-evidence:
+    needs: [chatbot, n8n]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: collected }
+      - name: Commit evidence to the 'evidence' branch (so results can be read without downloading artifacts)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git checkout --orphan evidence
+          git rm -rq --cached . && find . -mindepth 1 -maxdepth 1 ! -name .git ! -name collected -exec rm -rf {} +
+          cp -r collected/* . && rm -rf collected
+          echo "Run ${{ github.run_id }} of ${{ github.sha }} at $(date -u)" > RUN.txt
+          git add -A && git commit -qm "Evidence from run ${{ github.run_id }}" && git push -f origin evidence

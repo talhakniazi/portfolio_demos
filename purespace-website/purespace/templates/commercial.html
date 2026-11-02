@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stripes %}
+{% set services = [
+  ('office_regular', 'Daily, weekly or several times a week, before you open or after you close. Your team arrives to a clean, stocked office.',
+     ['Desks and work surfaces', 'Kitchens and break areas', 'Toilets and washrooms restocked', 'Floors hoovered and mopped', 'Bins and recycling emptied', 'Meeting rooms reset']),
+  ('office_deep', 'A one-off deep clean before a move, after a refit, or once or twice a year to reach what regular cleans don\'t.',
+     ['High-level dusting and vents', 'Carpets and hard floors deep-cleaned', 'Kitchen appliances inside and out', 'Washroom descaling', 'Chairs and soft furnishings', 'Internal glass and partitions']),
+  ('communal', 'Entrances, stairwells, lifts and corridors in apartment blocks and shared office buildings, on a regular schedule.',
+     ['Entrance halls and doors', 'Stairs, rails and landings', 'Lift interiors', 'Bin stores tidied', 'Notice boards and post areas', 'Light switches and handles sanitised']),
+] %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap page-head__grid">
+    <div>
+      <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / Office cleaning</p>
+      <h1>Office and commercial cleaning</h1>
+      <p class="lead">Reliable cleaning for offices, studios, clinics and shared buildings, scheduled round your working hours.</p>
+    </div>
+    <div>{% include "svg/office.svg" %}</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="svc-h">
+  <div class="wrap">
+    <h2 id="svc-h">Services for businesses</h2>
+    <div class="services">
+      {% for key, text, items in services %}
+      <article class="service" id="{{ key }}">
+        <span class="service__code {{ ['c-blue','c-green','c-yellow'][loop.index0] }}" aria-hidden="true"></span>
+        <div><h3>{{ key | service_label }}</h3><p>{{ text }}</p></div>
+        <ul class="ticks">{% for i in items %}<li>{{ i }}</li>{% endfor %}</ul>
+        <div class="service__aside">
+          <span class="service__price">£{{ pricing.COMMERCIAL[key][1] }} an hour<small>minimum {{ pricing.COMMERCIAL[key][3] }} hours a visit</small></span>
+          <a class="btn btn--ghost" href="{{ url_for('public.quote', sector='commercial', service=key) }}">Get a price</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist" aria-labelledby="why-h">
+  <div class="wrap two-col">
+    <div>
+      <h2 id="why-h">How we work with businesses</h2>
+      <p class="lead">You get one point of contact and a cleaning plan written for your building - not a generic checklist.</p>
+    </div>
+    <ul class="ticks">
+      <li>A free walk-round before we quote</li>
+      <li>The same cleaners on your site each week</li>
+      <li>Key-holding and alarm procedures agreed in writing</li>
+      <li>A named supervisor with a direct phone number</li>
+      <li>Safety data sheets for every product we use</li>
+      <li>Risk assessments and method statements on request</li>
+      <li>Monthly invoicing by bank transfer</li>
+      <li>30 days' notice, no long contracts</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap"><div class="band"><div><h2>Book a free walk-round</h2><p>Tell us about your premises and we'll arrange a time to visit and give you a fixed price.</p></div>
+    <a class="btn btn--light" href="{{ url_for('public.quote', sector='commercial') }}">Request a quote</a>{{ stripes() }}</div></div>
+</section>
+{% endblock %}

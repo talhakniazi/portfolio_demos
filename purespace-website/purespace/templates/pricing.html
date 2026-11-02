@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stripes %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / Prices</p>
+    <h1>Prices</h1>
+    <p class="lead">Guide prices for a single visit. Your exact price is confirmed with you before anything is booked, and it won't change on the day.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="home-prices">
+  <div class="wrap">
+    <h2 id="home-prices">Home cleaning</h2>
+    <p>Typical price range for one visit, by size of home. Regular cleans every week or two cost less per visit.</p>
+    <div class="table-wrap">
+      <table>
+        <caption class="visually-hidden">Guide prices for home cleaning by number of bedrooms</caption>
+        <thead><tr><th scope="col">Clean</th>
+          {% for beds, baths in [(1,1),(2,1),(3,2),(4,2)] %}<th scope="col" class="num">{{ beds }} bed, {{ baths }} bath</th>{% endfor %}</tr></thead>
+        <tbody>
+          {% for key in pricing.RESIDENTIAL %}
+          <tr><th scope="row">{{ key | service_label }}</th>
+            {% for beds, baths in [(1,1),(2,1),(3,2),(4,2)] %}{% set e = pricing.estimate('residential', key, beds, baths, None, 'one_off', []) %}
+            <td class="num">£{{ e[0] }} to £{{ e[1] }}</td>{% endfor %}</tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Regular cleans: {% for k in ['weekly', 'fortnightly'] %}{{ pricing.FREQUENCY[k][0] | lower }} saves {{ (pricing.FREQUENCY[k][1] * 100) | round | int }}%{{ ' and ' if loop.first else '' }}{% endfor %} on each visit.</p>
+  </div>
+</section>
+
+<section class="section section--mist" aria-labelledby="biz-prices">
+  <div class="wrap two-col">
+    <div>
+      <h2 id="biz-prices">Business cleaning</h2>
+      <p>Charged by the hour. After a free walk-round we give you a fixed price per visit, based on the time your premises actually need.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption class="visually-hidden">Hourly rates for business cleaning</caption>
+        <thead><tr><th scope="col">Service</th><th scope="col" class="num">Rate</th><th scope="col" class="num">Minimum visit</th></tr></thead>
+        <tbody>{% for key, (label, rate, sqft, minh) in pricing.COMMERCIAL.items() %}
+          <tr><th scope="row">{{ label }}</th><td class="num">£{{ rate }} an hour</td><td class="num">{{ minh }} hours</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="affects-h">
+  <div class="wrap two-col">
+    <div>
+      <h2 id="affects-h">What changes the price</h2>
+      <ul class="ticks">
+        <li>Size of the property</li><li>How often you book</li><li>The condition it's in now</li><li>Add-ons like ovens or windows</li>
+        <li>Parking and access</li><li>Out-of-hours times for businesses</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Add-ons</h2>
+      <div class="table-wrap"><table><caption class="visually-hidden">Add-on prices</caption>
+        <thead><tr><th scope="col">Add-on</th><th scope="col" class="num">Price</th></tr></thead>
+        <tbody>{% for k, (label, price) in pricing.EXTRAS.items() %}<tr><td>{{ label }}</td><td class="num">£{{ price }}</td></tr>{% endfor %}</tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap"><div class="band"><div><h2>Get a price for your property</h2><p>Answer a few questions and see your guide price straight away.</p></div>
+    <a class="btn btn--light" href="{{ url_for('public.quote') }}">Get a quote</a>{{ stripes() }}</div></div>
+</section>
+{% endblock %}

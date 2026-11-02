@@ -1,0 +1,40 @@
+<svg class="hero-cloths" viewBox="0 0 480 440" role="img" aria-labelledby="cloths-title" xmlns="http://www.w3.org/2000/svg">
+  <title id="cloths-title">Four folded cleaning cloths in blue, green, red and yellow, stacked beside a spray bottle</title>
+  <defs>
+    <pattern id="weave" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="8" fill="none"/><path d="M0 0v8" stroke="#ffffff" stroke-opacity=".16" stroke-width="2.4"/>
+    </pattern>
+    <linearGradient id="bottle" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe8ef"/></linearGradient>
+  </defs>
+  <ellipse cx="240" cy="402" rx="200" ry="22" fill="#eef3f6"/>
+  <!-- spray bottle -->
+  <g transform="translate(330 120)">
+    <path d="M30 40h46l-6 22H36z" fill="#14284b"/>
+    <path d="M44 18h22v22H44z" fill="#14284b"/><path d="M66 22h34l8 10-8 4H66z" fill="#14284b"/>
+    <path d="M100 30l10-4" stroke="#14284b" stroke-width="4" stroke-linecap="round"/>
+    <path d="M30 62h48c8 0 14 6 14 14v186c0 10-8 18-18 18H34c-10 0-18-8-18-18V82c0-11 6-20 14-20z" fill="url(#bottle)" stroke="#14284b" stroke-width="4"/>
+    <rect x="26" y="120" width="56" height="70" rx="8" fill="#14284b"/>
+    <rect x="34" y="132" width="40" height="6" rx="3" fill="#2f6fdb"/><rect x="34" y="144" width="28" height="6" rx="3" fill="#ffffff" opacity=".7"/>
+    <rect x="34" y="172" width="10" height="10" rx="2" fill="#25935f"/><rect x="48" y="172" width="10" height="10" rx="2" fill="#d6453d"/><rect x="62" y="172" width="10" height="10" rx="2" fill="#f2c12e"/>
+  </g>
+  <!-- cloth stack: outer group positions/rotates, inner .cloth animates -->
+  <g transform="translate(46 300) rotate(-3 150 40)"><g class="cloth">
+    <rect x="0" y="0" width="300" height="82" rx="14" fill="#f2c12e"/><rect x="0" y="0" width="300" height="82" rx="14" fill="url(#weave)"/>
+    <path d="M0 50h300" stroke="#14284b" stroke-opacity=".18" stroke-width="3"/><rect x="236" y="14" width="44" height="22" rx="4" fill="#ffffff" opacity=".85"/>
+  </g></g>
+  <g transform="translate(62 224) rotate(2 140 38)"><g class="cloth">
+    <rect x="0" y="0" width="282" height="78" rx="14" fill="#d6453d"/><rect x="0" y="0" width="282" height="78" rx="14" fill="url(#weave)"/>
+    <path d="M0 48h282" stroke="#14284b" stroke-opacity=".2" stroke-width="3"/><rect x="220" y="13" width="42" height="21" rx="4" fill="#ffffff" opacity=".85"/>
+  </g></g>
+  <g transform="translate(50 150) rotate(-2 145 38)"><g class="cloth">
+    <rect x="0" y="0" width="292" height="78" rx="14" fill="#25935f"/><rect x="0" y="0" width="292" height="78" rx="14" fill="url(#weave)"/>
+    <path d="M0 48h292" stroke="#14284b" stroke-opacity=".2" stroke-width="3"/><rect x="228" y="13" width="42" height="21" rx="4" fill="#ffffff" opacity=".85"/>
+  </g></g>
+  <g transform="translate(70 78) rotate(3 135 37)"><g class="cloth">
+    <rect x="0" y="0" width="272" height="76" rx="14" fill="#2f6fdb"/><rect x="0" y="0" width="272" height="76" rx="14" fill="url(#weave)"/>
+    <path d="M0 46h272" stroke="#14284b" stroke-opacity=".2" stroke-width="3"/><rect x="210" y="12" width="42" height="21" rx="4" fill="#ffffff" opacity=".9"/>
+  </g></g>
+  <!-- sparkles -->
+  <g class="sparkle" fill="#f2c12e" transform-origin="70 50"><path d="M70 22l7 21 21 7-21 7-7 21-7-21-21-7 21-7z"/></g>
+  <g class="sparkle" fill="#2f6fdb" transform-origin="430 70"><path d="M430 52l4 13 13 4-13 4-4 13-4-13-13-4 13-4z"/></g>
+</svg>

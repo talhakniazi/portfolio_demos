@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-GB" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} | {% endif %}{{ business.short_name }} Cleaning Services{% if not title %} - home and office cleaning in {{ business.area }}{% endif %}</title>
+  {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+  <meta name="theme-color" content="#14284b">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="preload" href="{{ url_for('static', filename='fonts/BricolageGrotesque-var.woff') }}" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  {% block head %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+{% set nav = [('public.residential', 'Home cleaning'), ('public.commercial', 'Office cleaning'), ('public.prices', 'Prices'), ('public.about', 'About us'), ('public.contact', 'Contact')] %}
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a class="logo" href="{{ url_for('public.home') }}" aria-label="{{ business.short_name }} home page">
+      {% include "svg/logo-mark.svg" %}
+      <span>{{ business.short_name }}<small>Cleaning Services</small></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle__icon" aria-hidden="true"></span>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul>
+        {% for endpoint, label in nav %}
+        <li><a href="{{ url_for(endpoint) }}"{% if request.endpoint == endpoint %} aria-current="page"{% endif %}>{{ label }}</a></li>
+        {% endfor %}
+      </ul>
+      <a class="btn btn--primary" href="{{ url_for('public.quote') }}">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div>
+      <a class="logo" href="{{ url_for('public.home') }}">{% include "svg/logo-mark.svg" %}<span>{{ business.short_name }}<small>Cleaning Services</small></span></a>
+      <p class="small">Home and office cleaning across {{ business.area }}.</p>
+    </div>
+    <div>
+      <h2>Cleaning</h2>
+      <ul>
+        <li><a href="{{ url_for('public.residential') }}">Home cleaning</a></li>
+        <li><a href="{{ url_for('public.commercial') }}">Office cleaning</a></li>
+        <li><a href="{{ url_for('public.prices') }}">Prices</a></li>
+        <li><a href="{{ url_for('public.quote') }}">Get a quote</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <ul>
+        <li><a href="{{ url_for('public.about') }}">About us</a></li>
+        <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('public.privacy') }}">Privacy notice</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Talk to us</h2>
+      <ul>
+        <li><a href="tel:{{ business.phone_link }}">{{ business.phone }}</a></li>
+        <li><a href="https://wa.me/{{ business.whatsapp_link }}" rel="noopener">WhatsApp {{ business.whatsapp }}</a></li>
+        <li><a href="mailto:{{ business.email }}">{{ business.email }}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap site-footer__legal">
+    <span>&copy; {{ business.name }}. Registered in England and Wales, company number {{ business.company_number }}.</span>
+    <span>{{ business.address | join(', ') }}</span>
+  </div>
+  <div class="stripes footer-stripes" aria-hidden="true"><span class="c-blue"></span><span class="c-green"></span><span class="c-red"></span><span class="c-yellow"></span></div>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

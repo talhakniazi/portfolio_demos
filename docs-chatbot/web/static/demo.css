@@ -1,0 +1,16 @@
+:root { --ink: #10231f; --teal: #0b6b5d; --sand: #f4efe6; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--sand); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+.demo-note { margin: 0; padding: 8px 20px; background: #10231f; color: #e8e2d6; font-size: 13px; text-align: center; }
+.shop-head { background: #fff; border-bottom: 1px solid #e3dccf; }
+.shop-head .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+.brand { font-size: 20px; letter-spacing: -.01em; color: var(--teal); }
+.shop-head nav { display: flex; gap: 22px; font-weight: 600; font-size: 15px; }
+.hero { padding: 64px 0; max-width: 620px; }
+.hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.08; margin: 0 0 16px; letter-spacing: -.02em; }
+.hero p { font-size: 18px; margin: 0 0 28px; }
+.docs { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.docs li { background: #fff; border: 1px solid #e3dccf; border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; }
+.docs small { color: var(--teal); font-weight: 700; }
+@media (max-width: 600px) { .shop-head nav { display: none; } .hero { padding: 36px 0 120px; } }

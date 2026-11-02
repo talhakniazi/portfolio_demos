@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stripes %}
+{% block main %}
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <h1>A properly clean home or workplace, every visit.</h1>
+      <p class="lead">Vetted, insured cleaners across {{ business.area }}. Tell us about the job and see a guide price in under a minute.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="{{ url_for('public.quote') }}">Get a guide price</a>
+        <a class="btn btn--ghost" href="tel:{{ business.phone_link }}">Call {{ business.phone }}</a>
+      </div>
+      <p class="hero__note"><span><span class="dot c-green" aria-hidden="true"></span>We reply within one working day</span>
+        <span><span class="dot c-blue" aria-hidden="true"></span>Evening and weekend slots</span></p>
+    </div>
+    <div class="hero__art">{% include "svg/cloths.svg" %}</div>
+  </div>
+  <div class="wrap">
+    <ul class="promises">
+      {% for title, text in content.PROMISES %}<li><strong>{{ title }}</strong><span>{{ text }}</span></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--mist" aria-labelledby="split-h">
+  <div class="wrap">
+    <h2 id="split-h">Homes and workplaces</h2>
+    <p class="lead">The same trained team and the same standards, whether it's a two-bed flat or a three-floor office.</p>
+    <div class="split">
+      <article class="split__item">
+        <div class="split__art">{% include "svg/home.svg" %}</div>
+        <div class="split__body">
+          <h3>Home cleaning</h3>
+          <p>Weekly or fortnightly cleans with the same cleaner each time, plus one-off deep cleans when you need them.</p>
+          <ul>
+            <li>Regular cleaning</li><li>Deep cleans</li><li>End of tenancy</li><li>After builders</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="{{ url_for('public.residential') }}">See home cleaning</a>
+            <span class="small">From £{{ pricing.from_price('regular') }} a visit</span>
+          </div>
+        </div>
+      </article>
+      <article class="split__item">
+        <div class="split__art">{% include "svg/office.svg" %}</div>
+        <div class="split__body">
+          <h3>Office and commercial cleaning</h3>
+          <p>Early-morning or evening cleaning that fits round your working day, with a named supervisor you can call.</p>
+          <ul>
+            <li>Daily or weekly office cleans</li><li>Out-of-hours visits</li><li>Communal areas and stairwells</li><li>One-off deep cleans</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="{{ url_for('public.commercial') }}">See office cleaning</a>
+            <span class="small">From £{{ pricing.COMMERCIAL['office_regular'][1] }} an hour</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="cloth-h">
+  <div class="wrap cloth-system">
+    <div>
+      <h2 id="cloth-h">A cloth used on a toilet never touches your kitchen.</h2>
+      <p class="lead">Professional cleaners colour-code their cloths so germs aren't carried from one room to another. We use the same system in every home and office, and it's why our logo has four colours.</p>
+      <p>Cloths are washed at 90°C after every job, so each visit starts with a fresh set.</p>
+    </div>
+    <ul class="cloth-list">
+      {% for key, name, use in cloths %}
+      <li><span class="swatch c-{{ key }}" aria-hidden="true"></span><div><strong>{{ name }}</strong><span>{{ use }}</span></div></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--mist" aria-labelledby="how-h">
+  <div class="wrap">
+    <h2 id="how-h">How it works</h2>
+    <ol class="steps">
+      <li><h3>Tell us about the clean</h3><p>Answer a few questions online and see a guide price straight away.</p></li>
+      <li><h3>We confirm your price</h3><p>We call or message within one working day to check the details. Large or unusual jobs get a free visit first.</p></li>
+      <li><h3>We clean, you check</h3><p>Your cleaner arrives on time with everything needed. If anything was missed, we come back within 24 hours.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="areas-h">
+  <div class="wrap">
+    <h2 id="areas-h">Where we clean</h2>
+    <p>We cover {{ business.area }}, including:</p>
+    <ul class="chips">{% for a in content.AREAS %}<li>{{ a }}</li>{% endfor %}</ul>
+    <p class="small">Not on the list? <a href="{{ url_for('public.contact') }}">Ask us</a> - we may still cover your area.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="band">
+      <div><h2>See your guide price now</h2><p>It takes about a minute, and there's no obligation to book.</p></div>
+      <a class="btn btn--light" href="{{ url_for('public.quote') }}">Get a quote</a>
+      {{ stripes() }}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+# Harbourline Supplies - monthly sales pipeline settings
+[sources]
+shop_csv = "data/raw/shop_orders_export.csv"
+stock_xlsx = "data/raw/stock_levels.xlsx"
+marketplace_api = "http://127.0.0.1:8765/api/orders"   # the demo starts a mock API here
+api_page_size = 25
+
+[outputs]
+database = "data/warehouse.sqlite"
+reports_dir = "reports"
+rejected_dir = "data/rejected"
+logs_dir = "logs"
+
+[rules]
+low_stock_cover_days = 14     # flag products with fewer days of stock than this

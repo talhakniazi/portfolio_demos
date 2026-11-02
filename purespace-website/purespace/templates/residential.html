@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stripes %}
+{% set services = [
+  ('regular', 'For busy households who want to come home to a clean house every week or fortnight. The same cleaner each visit, who learns how you like things.',
+     ['Kitchen surfaces, hob and sink', 'Bathrooms and toilets', 'Dusting and polishing', 'Hoovering and mopping all floors', 'Beds made, bins emptied', 'Mirrors and glass']),
+  ('deep', 'A top-to-bottom clean for spring cleaning, before guests arrive, or to get back on top of things before regular cleans start.',
+     ['Everything in a regular clean', 'Inside cupboards and drawers', 'Skirting boards, doors and frames', 'Limescale removal', 'Behind and under furniture', 'Light switches and sockets']),
+  ('end_of_tenancy', 'Checklist-based cleaning that letting agents and landlords expect, so tenants can get their deposit back and landlords can re-let quickly.',
+     ['Everything in a deep clean', 'Inside oven, fridge and freezer', 'Inside windows and frames', 'Kitchen appliances', 'Walls spot-cleaned', 'Inventory checklist followed']),
+  ('after_builders', 'Removing the fine dust, paint spots and debris left after building work or decorating, so you can actually use the space.',
+     ['Fine dust removed from every surface', 'Paint and plaster spots', 'Windows, sills and frames', 'Floors vacuumed and washed', 'Fixtures and fittings polished', 'Rubbish bagged for disposal']),
+] %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap page-head__grid">
+    <div>
+      <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / Home cleaning</p>
+      <h1>Home cleaning</h1>
+      <p class="lead">Regular cleans, deep cleans and moving-out cleans for flats and houses across {{ business.area }}.</p>
+    </div>
+    <div>{% include "svg/home.svg" %}</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="svc-h">
+  <div class="wrap">
+    <h2 id="svc-h">Choose the clean you need</h2>
+    <div class="services">
+      {% for key, text, items in services %}
+      <article class="service" id="{{ key }}">
+        <span class="service__code {{ ['c-blue','c-green','c-red','c-yellow'][loop.index0] }}" aria-hidden="true"></span>
+        <div><h3>{{ key | service_label }}</h3><p>{{ text }}</p></div>
+        <ul class="ticks">{% for i in items %}<li>{{ i }}</li>{% endfor %}</ul>
+        <div class="service__aside">
+          <span class="service__price">From £{{ pricing.from_price(key) }}<small>1 bedroom, 1 bathroom</small></span>
+          <a class="btn btn--ghost" href="{{ url_for('public.quote', sector='residential', service=key) }}">Get a price</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist" aria-labelledby="rooms-h">
+  <div class="wrap">
+    <h2 id="rooms-h">What a regular clean covers, room by room</h2>
+    <p class="lead">Each room gets its own colour of cloth, so nothing is carried from the bathroom to the kitchen.</p>
+    <div class="rooms">
+      <div class="room room--green"><h3>Kitchen</h3><ul><li>Worktops and splashbacks wiped and sanitised</li><li>Hob cleaned, outside of appliances wiped</li><li>Sink and taps descaled and polished</li><li>Floor hoovered and mopped</li></ul></div>
+      <div class="room room--yellow"><h3>Bathrooms</h3><ul><li>Bath, shower and tiles cleaned</li><li>Basins and taps descaled</li><li>Toilets cleaned inside and out (red cloths only)</li><li>Mirrors polished, floor mopped</li></ul></div>
+      <div class="room room--blue"><h3>Living areas and bedrooms</h3><ul><li>Dusting, including high and low surfaces</li><li>Furniture and glass polished</li><li>Carpets and rugs hoovered</li><li>Beds made and bins emptied</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="extras-h">
+  <div class="wrap two-col">
+    <div>
+      <h2 id="extras-h">Add-ons</h2>
+      <p>Add any of these to a clean when you request a quote.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption class="visually-hidden">Add-on prices</caption>
+        <thead><tr><th scope="col">Add-on</th><th scope="col" class="num">Price</th></tr></thead>
+        <tbody>{% for k, (label, price) in pricing.EXTRAS.items() %}<tr><td>{{ label }}</td><td class="num">£{{ price }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap"><div class="band"><div><h2>Get a guide price for your home</h2><p>Choose the clean, tell us the number of rooms, and see a price straight away.</p></div>
+    <a class="btn btn--light" href="{{ url_for('public.quote', sector='residential') }}">Get a quote</a>{{ stripes() }}</div></div>
+</section>
+{% endblock %}

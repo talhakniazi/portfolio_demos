@@ -1,0 +1,377 @@
+{
+  "id": "leadCaptureDemo01",
+  "name": "Website lead -> CRM -> sales alert -> confirmation email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8045fad0-79cb-5e4d-bc50-a768387e25ae",
+      "name": "New enquiry (webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "d22b15e4-1f23-54cd-8bc6-41726e4d6c26"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Clean the form data, reject bad submissions, and score the lead so hot leads get an instant alert.\nconst b = $input.first().json.body || {};\nconst clean = (v, n = 200) => String(v ?? '').replace(/\\s+/g, ' ').trim().slice(0, n);\nconst lead = {\n  name: clean(b.name, 80), email: clean(b.email, 120).toLowerCase(), company: clean(b.company, 120),\n  phone: clean(b.phone, 30), service: clean(b.service, 60), budget: Number(String(b.budget ?? '').replace(/[^\\d.]/g, '')) || 0,\n  message: clean(b.message, 2000), source: clean(b.source || 'website', 40),\n};\nconst errors = [];\nif (!lead.name) errors.push('name is required');\nif (!/^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$/i.test(lead.email)) errors.push('a valid email is required');\nif (b.website) errors.push('spam trap filled');            // hidden honeypot field on the form\nlet score = 0;\nif (lead.company) score += 20;\nif (lead.phone) score += 10;\nif (lead.budget >= 5000) score += 40; else if (lead.budget >= 1000) score += 20;\nif (/urgent|asap|this week|immediately/i.test(lead.message)) score += 20;\nif (/free email/i.test(lead.email) || /@(gmail|yahoo|hotmail|outlook)\\./i.test(lead.email)) score -= 5;\nlead.score = Math.max(0, Math.min(100, score));\nlead.temperature = lead.score >= 60 ? 'hot' : lead.score >= 30 ? 'warm' : 'cold';\nreturn [{ json: { ...lead, valid: errors.length === 0, errors } }];"
+      },
+      "id": "2c0e2671-4cde-534c-8cb1-e428e435e344",
+      "name": "Validate and score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "9ce67624-2adf-5b47-9a5f-80b2efda9bff",
+      "name": "Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.MOCK_BASE }}/crm/contacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            }
+          ]
+        }
+      },
+      "id": "8799411f-2f21-52f0-a5d0-c51cc13ce899",
+      "name": "Find contact in CRM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.results.length > 0 }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "eef92688-1c35-5ee8-b9bc-8a32a92af65f",
+      "name": "Already a contact?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        880,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $env.MOCK_BASE }}/crm/contacts/{{ $json.results[0].id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ lead_score: $('Validate and score').first().json.score, note: 'New website enquiry (' + $('Validate and score').first().json.service + '): ' + $('Validate and score').first().json.message }) }}"
+      },
+      "id": "0efd9ea5-e848-5188-9f5a-84c4da0f45a5",
+      "name": "Add note to existing contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.MOCK_BASE }}/crm/contacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify((({valid, errors, ...l}) => ({ ...l, lifecycle_stage: 'lead', lead_score: l.score }))($('Validate and score').first().json)) }}"
+      },
+      "id": "ba2b8f3c-788c-5a2f-8146-594678eba434",
+      "name": "Create contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.MOCK_BASE }}/chat/webhook",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: ($('Validate and score').first().json.temperature === 'hot' ? '\ud83d\udd25 HOT lead' : 'New ' + $('Validate and score').first().json.temperature + ' lead') + ': ' + $('Validate and score').first().json.name + ($('Validate and score').first().json.company ? ' (' + $('Validate and score').first().json.company + ')' : '') + ' wants ' + ($('Validate and score').first().json.service || 'a quote') + '. Score ' + $('Validate and score').first().json.score + '/100. CRM id ' + $json.id }) }}"
+      },
+      "id": "59cafb44-4478-58b1-a372-d4cf6001c65b",
+      "name": "Alert sales channel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.MOCK_BASE }}/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ From: 'hello@northwind-studio.example', To: $('Validate and score').first().json.email, Subject: 'Thanks for your enquiry, ' + $('Validate and score').first().json.name.split(' ')[0], TextBody: 'Hi ' + $('Validate and score').first().json.name.split(' ')[0] + ',\\n\\nThanks for getting in touch about ' + ($('Validate and score').first().json.service || 'your project') + '. One of the team will reply within one working day.\\n\\nNorthwind Studio (demo)' }) }}"
+      },
+      "id": "ceff8420-45a7-5de1-befb-c5de17ca425f",
+      "name": "Confirmation email to lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, crm_id: $('Create contact').isExecuted ? $('Create contact').first().json.id : $('Add note to existing contact').first().json.id, temperature: $('Validate and score').first().json.temperature }) }}",
+        "options": {
+          "responseCode": 201
+        }
+      },
+      "id": "60975126-ebfa-571b-acc5-ed4acb1fed93",
+      "name": "Reply 201 to form",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, errors: $json.errors }) }}",
+        "options": {
+          "responseCode": 422
+        }
+      },
+      "id": "41062a21-a7b6-5caf-8732-a0aa2b137b4b",
+      "name": "Reply 422 with errors",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "New enquiry (webhook)": {
+      "main": [
+        [
+          {
+            "node": "Validate and score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate and score": {
+      "main": [
+        [
+          {
+            "node": "Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valid?": {
+      "main": [
+        [
+          {
+            "node": "Find contact in CRM",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reply 422 with errors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find contact in CRM": {
+      "main": [
+        [
+          {
+            "node": "Already a contact?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already a contact?": {
+      "main": [
+        [
+          {
+            "node": "Add note to existing contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add note to existing contact": {
+      "main": [
+        [
+          {
+            "node": "Alert sales channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create contact": {
+      "main": [
+        [
+          {
+            "node": "Alert sales channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert sales channel": {
+      "main": [
+        [
+          {
+            "node": "Confirmation email to lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmation email to lead": {
+      "main": [
+        [
+          {
+            "node": "Reply 201 to form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "cb7fe5fb-23e0-57ef-a0dc-3ede9bf17cdf"
+}

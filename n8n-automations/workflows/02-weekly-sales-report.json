@@ -1,0 +1,232 @@
+{
+  "id": "weeklyReportDemo02",
+  "name": "Weekly sales report -> email + team chat",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "831bb434-e7e3-50fb-a820-a70355215529",
+      "name": "Every Monday 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a69a3433-ca9a-55ac-bc8a-780e9a4f94e0",
+      "name": "Run now (manual test)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const day = 864e5, today = new Date(); today.setUTCHours(0, 0, 0, 0);\nconst iso = d => d.toISOString().slice(0, 10);\nreturn [{ json: { since: iso(new Date(today - 14 * day)), split: iso(new Date(today - 7 * day)), today: iso(today) } }];"
+      },
+      "id": "cec76436-a8dd-561d-bb22-2f1251c448fe",
+      "name": "Set date range",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.MOCK_BASE }}/shop/orders",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "since",
+              "value": "={{ $json.since }}"
+            }
+          ]
+        }
+      },
+      "id": "3cc89b6d-5e90-5b09-8db5-e190385dccc9",
+      "name": "Get orders (last 14 days)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const { split, today } = $('Set date range').first().json;\nconst orders = $input.first().json.orders.filter(o => o.status === 'paid');\nconst thisWeek = orders.filter(o => o.date >= split), lastWeek = orders.filter(o => o.date < split);\nconst sum = a => a.reduce((t, o) => t + o.total, 0);\nconst rev = sum(thisWeek), prev = sum(lastWeek);\nconst change = prev ? Math.round((rev - prev) / prev * 1000) / 10 : null;\nconst byProduct = {};\nfor (const o of thisWeek) byProduct[o.product] = (byProduct[o.product] || 0) + o.total;\nconst top = Object.entries(byProduct).sort((a, b) => b[1] - a[1]);\nconst gbp = n => '\u00a3' + n.toLocaleString('en-GB', { minimumFractionDigits: 0 });\nconst arrow = change === null ? '' : change >= 0 ? `\u25b2 ${change}%` : `\u25bc ${Math.abs(change)}%`;\nconst rows = top.map(([p, v]) => `<tr><td>${p}</td><td align=\"right\">${gbp(v)}</td></tr>`).join('');\nconst html = `<h2>Weekly sales report (week to ${today})</h2>\n<p><b>Revenue ${gbp(rev)}</b> ${arrow} vs previous week (${gbp(prev)}), from ${thisWeek.length} orders.</p>\n<table cellpadding=\"4\">${rows}</table><p style=\"color:#777\">Generated automatically by n8n. Demo data.</p>`;\nconst text = `Weekly sales: ${gbp(rev)} ${arrow} from ${thisWeek.length} orders. Top product: ${top[0]?.[0] ?? 'none'}.`;\nreturn [{ json: { revenue: rev, previous: prev, change_pct: change, orders: thisWeek.length, top, html, text } }];"
+      },
+      "id": "b4d0d21b-e028-51b7-9db0-78220c79dc5b",
+      "name": "Build report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.MOCK_BASE }}/email/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ From: 'reports@northwind-studio.example', To: 'manager@northwind-studio.example', Subject: 'Weekly sales: ' + $json.text.split(' from')[0].replace('Weekly sales: ', ''), HtmlBody: $json.html }) }}"
+      },
+      "id": "82fcc38d-f468-590d-8686-58b16c4a1d1f",
+      "name": "Email report to manager",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.MOCK_BASE }}/chat/webhook",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.MOCK_API_KEY }}"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: '\ud83d\udcca ' + $('Build report').first().json.text }) }}"
+      },
+      "id": "547083ff-e99f-5821-b606-7b23edd9f68a",
+      "name": "Post summary to team chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Every Monday 08:00": {
+      "main": [
+        [
+          {
+            "node": "Set date range",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run now (manual test)": {
+      "main": [
+        [
+          {
+            "node": "Set date range",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set date range": {
+      "main": [
+        [
+          {
+            "node": "Get orders (last 14 days)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get orders (last 14 days)": {
+      "main": [
+        [
+          {
+            "node": "Build report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build report": {
+      "main": [
+        [
+          {
+            "node": "Email report to manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email report to manager": {
+      "main": [
+        [
+          {
+            "node": "Post summary to team chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "8604f8b8-83f1-535c-834c-dff2c862d215"
+}

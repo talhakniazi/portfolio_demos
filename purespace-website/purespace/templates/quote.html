@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% from "_macros.html" import field, error_summary, describedby, stripes %}
+{% set sector = form.get('sector', '') %}
+{% set res_freq = ['one_off', 'weekly', 'fortnightly', 'monthly'] %}
+{% set com_freq = ['one_off', 'daily', 'three_weekly', 'weekly', 'monthly'] %}
+{% block head %}<script type="application/json" id="pricing-data">{{ pricing_json | safe }}</script>
+<script src="{{ url_for('static', filename='js/quote.js') }}" defer></script>{% endblock %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / Get a quote</p>
+    <h1>Get a quote</h1>
+    <p class="lead">Tell us about the clean you need. You'll see a guide price as you go, and we'll confirm your exact price within one working day.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap form-layout">
+    <form method="post" action="{{ url_for('public.quote') }}" novalidate data-validate id="quote-form">
+      {{ error_summary(errors) }}
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="hp" aria-hidden="true"><label for="f-website">Leave this empty</label><input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+
+      <fieldset>
+        <legend>What needs cleaning?</legend>
+        <div class="field{% if errors.get('sector') %} field--error{% endif %}" id="f-sector">
+          {% if errors.get('sector') %}<span class="error-msg"><span class="visually-hidden">Error:</span> {{ errors['sector'] }}</span>{% endif %}
+          <div class="choice-cards" role="radiogroup" aria-label="Type of property">
+            <div class="choice"><input type="radio" name="sector" id="sector-res" value="residential" required{% if sector == 'residential' %} checked{% endif %}>
+              <label for="sector-res"><strong>A home</strong><span>House, flat or rental</span></label></div>
+            <div class="choice"><input type="radio" name="sector" id="sector-com" value="commercial"{% if sector == 'commercial' %} checked{% endif %}>
+              <label for="sector-com"><strong>A business</strong><span>Office or shared building</span></label></div>
+          </div>
+        </div>
+
+        <div class="field{% if errors.get('service') %} field--error{% endif %}">
+          <label for="f-service">Type of clean</label>
+          {% if errors.get('service') %}<span class="error-msg" id="service-error"><span class="visually-hidden">Error:</span> {{ errors['service'] }}</span>{% endif %}
+          <select id="f-service" name="service" required{{ describedby('service', None, errors) }}>
+            <option value="">Choose a clean</option>
+            <optgroup label="Homes" data-sector="residential">
+              {% for k, v in pricing.RESIDENTIAL.items() %}<option value="{{ k }}" data-sector="residential"{% if form.get('service') == k %} selected{% endif %}>{{ v[0] }}</option>{% endfor %}
+            </optgroup>
+            <optgroup label="Businesses" data-sector="commercial">
+              {% for k, v in pricing.COMMERCIAL.items() %}<option value="{{ k }}" data-sector="commercial"{% if form.get('service') == k %} selected{% endif %}>{{ v[0] }}</option>{% endfor %}
+            </optgroup>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>About the job</legend>
+        <div data-for="residential">
+          <div class="row-2">
+            <div class="field{% if errors.get('bedrooms') %} field--error{% endif %}">
+              <label for="f-bedrooms">Bedrooms</label>
+              {% if errors.get('bedrooms') %}<span class="error-msg" id="bedrooms-error">{{ errors['bedrooms'] }}</span>{% endif %}
+              <select id="f-bedrooms" name="bedrooms"{{ describedby('bedrooms', None, errors) }}>
+                {% for n in range(0, 9) %}<option value="{{ n }}"{% if form.get('bedrooms', '2') | string == n | string %} selected{% endif %}>{{ 'Studio' if n == 0 else n }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="field{% if errors.get('bathrooms') %} field--error{% endif %}">
+              <label for="f-bathrooms">Bathrooms</label>
+              {% if errors.get('bathrooms') %}<span class="error-msg" id="bathrooms-error">{{ errors['bathrooms'] }}</span>{% endif %}
+              <select id="f-bathrooms" name="bathrooms"{{ describedby('bathrooms', None, errors) }}>
+                {% for n in range(1, 7) %}<option value="{{ n }}"{% if form.get('bathrooms', '1') | string == n | string %} selected{% endif %}>{{ n }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <span class="field__label" id="extras-label">Add-ons <span class="muted">(optional)</span></span>
+            <div class="checks" role="group" aria-labelledby="extras-label">
+              {% set chosen = form.getlist('extras') if form.getlist is defined else [] %}
+              {% for k, (label, price) in pricing.EXTRAS.items() %}
+              <div class="check"><input type="checkbox" id="x-{{ k }}" name="extras" value="{{ k }}"{% if k in chosen %} checked{% endif %}>
+                <label for="x-{{ k }}">{{ label }} <span class="muted">+£{{ price }}</span></label></div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div data-for="commercial">
+          {{ field('floor_area', 'Floor area in square feet', form, errors, type='text', cls='input--mid',
+                   hint='A rough figure is fine. A typical 20-desk office is about 2,000 sq ft.', required=False, extra='inputmode="numeric"') }}
+        </div>
+        <div class="field{% if errors.get('frequency') %} field--error{% endif %}">
+          <label for="f-frequency">How often?</label>
+          {% if errors.get('frequency') %}<span class="error-msg" id="frequency-error">{{ errors['frequency'] }}</span>{% endif %}
+          <select id="f-frequency" name="frequency" class="input--mid"{{ describedby('frequency', None, errors) }}>
+            {% for k, (label, disc) in pricing.FREQUENCY.items() %}
+            <option value="{{ k }}" data-sector="{{ 'both' if k in res_freq and k in com_freq else ('residential' if k in res_freq else 'commercial') }}"{% if form.get('frequency', 'one_off') == k %} selected{% endif %}>{{ label }}{% if disc %} (save {{ (disc * 100) | round | int }}%){% endif %}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {{ field('postcode', 'Postcode of the property', form, errors, cls='input--short', autocomplete='postal-code', extra='autocapitalize="characters" spellcheck="false"') }}
+        {{ field('preferred_date', 'Preferred date', form, errors, type='date', cls='input--mid', required=False, hint='Leave blank if you are flexible.') }}
+      </fieldset>
+
+      <fieldset>
+        <legend>Your details</legend>
+        {{ field('name', 'Your name', form, errors, autocomplete='name') }}
+        {{ field('email', 'Email address', form, errors, type='email', autocomplete='email', hint='We send your quote here.', extra='spellcheck="false"') }}
+        {{ field('phone', 'Phone number', form, errors, type='tel', autocomplete='tel', cls='input--mid', required=False) }}
+        <div class="field">
+          <span class="field__label" id="pref-label">How should we get back to you?</span>
+          <div class="checks" role="radiogroup" aria-labelledby="pref-label">
+            {% for k, label in [('email', 'Email'), ('phone', 'Phone call'), ('whatsapp', 'WhatsApp')] %}
+            <div class="check"><input type="radio" id="pref-{{ k }}" name="contact_pref" value="{{ k }}"{% if form.get('contact_pref', 'email') == k %} checked{% endif %}><label for="pref-{{ k }}">{{ label }}</label></div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-message">Anything else we should know? <span class="muted">(optional)</span></label>
+          <span class="hint" id="message-hint">For example parking, pets, access, or areas that need extra attention.</span>
+          <textarea id="f-message" name="message" maxlength="2000" aria-describedby="message-hint">{{ form.get('message', '') }}</textarea>
+        </div>
+        <div class="field{% if errors.get('consent') %} field--error{% endif %}">
+          {% if errors.get('consent') %}<span class="error-msg" id="consent-error"><span class="visually-hidden">Error:</span> {{ errors['consent'] }}</span>{% endif %}
+          <div class="check"><input type="checkbox" id="f-consent" name="consent" value="yes" required{% if form.get('consent') == 'yes' %} checked{% endif %}{{ describedby('consent', None, errors) }}>
+            <label for="f-consent">I agree to {{ business.short_name }} using these details to prepare my quote, as described in the <a href="{{ url_for('public.privacy') }}">privacy notice</a>.</label></div>
+        </div>
+      </fieldset>
+      <button class="btn btn--primary" type="submit">Send my quote request</button>
+      <p class="small">No obligation. We never share your details.</p>
+    </form>
+
+    <aside class="estimate" aria-live="polite" aria-labelledby="est-h">
+      <h2 id="est-h">Your guide price</h2>
+      <p class="estimate__value" id="est-value">Choose a clean</p>
+      <span class="estimate__per" id="est-per">to see a price</span>
+      <p>This is a guide based on your answers. We confirm the exact price before anything is booked.</p>
+      <noscript><p>Turn on JavaScript to see a price as you go, or see our <a href="{{ url_for('public.prices') }}">prices</a>.</p></noscript>
+      {{ stripes() }}
+    </aside>
+  </div>
+</section>
+{% endblock %}

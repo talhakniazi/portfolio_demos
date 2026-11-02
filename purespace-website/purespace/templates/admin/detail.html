@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ e.ref }}{% endblock %}
+{% block main %}
+<p><a href="{{ url_for('admin.index') }}">Back to enquiries</a></p>
+<h1 class="h2">{{ e.name }} <span class="badge badge--{{ e.status }}">{{ e.status | status_label }}</span></h1>
+<p class="small">{{ 'Quote request' if e.kind == 'quote' else 'Message' }} {{ e.ref }}, received {{ e.created_at | when }}</p>
+
+<div class="detail-grid">
+  <div>
+    <section class="panel" aria-labelledby="contact-h">
+      <h2 class="h3" id="contact-h">Contact</h2>
+      <dl class="facts facts--admin">
+        <dt>Email</dt><dd><a href="mailto:{{ e.email }}?subject=Your%20cleaning%20quote%20{{ e.ref }}">{{ e.email }}</a></dd>
+        <dt>Phone</dt><dd>{% if e.phone %}<a href="tel:{{ e.phone | replace(' ', '') }}">{{ e.phone }}</a>{% else %}-{% endif %}</dd>
+        {% if e.contact_pref %}<dt>Prefers</dt><dd>{{ {'email': 'Email', 'phone': 'Phone call', 'whatsapp': 'WhatsApp'}[e.contact_pref] }}</dd>{% endif %}
+      </dl>
+    </section>
+    {% if e.kind == 'quote' %}
+    <section class="panel" aria-labelledby="job-h">
+      <h2 class="h3" id="job-h">The job</h2>
+      <dl class="facts facts--admin">
+        <dt>Property</dt><dd>{{ 'Home' if e.sector == 'residential' else 'Business' }}</dd>
+        <dt>Clean</dt><dd>{{ e.service | service_label }}</dd>
+        {% if e.sector == 'residential' %}<dt>Size</dt><dd>{{ 'Studio' if e.bedrooms == 0 else e.bedrooms ~ ' bedroom(s)' }}, {{ e.bathrooms }} bathroom(s)</dd>
+        {% else %}<dt>Floor area</dt><dd>{{ '{:,}'.format(e.floor_area) if e.floor_area else '-' }} sq ft</dd>{% endif %}
+        <dt>How often</dt><dd>{{ e.frequency | freq_label }}</dd>
+        {% if extras %}<dt>Add-ons</dt><dd>{{ extras | join(', ') }}</dd>{% endif %}
+        <dt>Postcode</dt><dd>{{ e.postcode }}</dd>
+        <dt>Preferred date</dt><dd>{{ e.preferred_date or 'Flexible' }}</dd>
+        <dt>Guide price shown</dt><dd>{% if e.estimate_low %}£{{ e.estimate_low }} to £{{ e.estimate_high }}{% else %}-{% endif %}</dd>
+      </dl>
+    </section>
+    {% endif %}
+    <section class="panel" aria-labelledby="msg-h">
+      <h2 class="h3" id="msg-h">Their message</h2>
+      <p>{{ e.message or 'No message.' }}</p>
+    </section>
+  </div>
+
+  <div>
+    <section class="panel" aria-labelledby="status-h">
+      <h2 class="h3" id="status-h">Status</h2>
+      <form method="post" action="{{ url_for('admin.set_status', ref=e.ref) }}" class="filters" data-once>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field"><label for="f-status" class="visually-hidden">Status</label>
+          <select id="f-status" name="status">{% for k, l in statuses %}<option value="{{ k }}"{% if e.status == k %} selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+        <button class="btn btn--primary" type="submit">Update status</button>
+      </form>
+    </section>
+    <section class="panel" id="notes" aria-labelledby="notes-h">
+      <h2 class="h3" id="notes-h">Notes</h2>
+      <form method="post" action="{{ url_for('admin.add_note', ref=e.ref) }}" data-once>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field"><label for="f-body" class="visually-hidden">New note</label>
+          <textarea id="f-body" name="body" maxlength="2000" placeholder="For example: Called, sent quote of £95 for fortnightly cleans."></textarea></div>
+        <button class="btn btn--ghost" type="submit">Save note</button>
+      </form>
+      <ul class="notes">{% for n in notes %}<li>{{ n.body }}<small>{{ n.author }}, {{ n.created_at | when }}</small></li>{% else %}<li class="muted">No notes yet.</li>{% endfor %}</ul>
+    </section>
+    <section class="panel" id="delete" aria-labelledby="delete-h">
+      <h2 class="h3" id="delete-h">Delete this enquiry</h2>
+      <p class="small">Use this when a customer asks for their data to be removed. It cannot be undone.</p>
+      <form method="post" action="{{ url_for('admin.delete', ref=e.ref) }}" data-once>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field"><label for="f-confirm">Type {{ e.ref }} to confirm</label><input type="text" id="f-confirm" name="confirm" autocomplete="off" class="input--mid"></div>
+        <button class="btn btn--ghost" type="submit">Delete permanently</button>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

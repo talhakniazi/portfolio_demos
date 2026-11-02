@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="error-page">
+  <div class="wrap">
+    <p class="error-page__code" aria-hidden="true">{{ code }}</p>
+    <h1>{{ title }}</h1>
+    <p class="lead">{{ message }}</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="{{ url_for('public.home') }}">Go to the home page</a>
+      <a class="btn btn--ghost" href="tel:{{ business.phone_link }}">Call {{ business.phone }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "admin/base.html" %}
+{% block main %}
+{% if sample %}<p class="warn">The website is still showing sample business details (phone, address, promises). Update <code>purespace/content.py</code> before launch - see the launch checklist in the README.</p>{% endif %}
+<h1 class="h2">Enquiries</h1>
+<p class="small">{{ week }} new in the last 7 days.</p>
+
+<div class="stats" role="list">
+  {% for key, label in statuses %}
+  <a class="stat" role="listitem" href="{{ url_for('admin.index', status=key) }}"{% if f.status == key %} aria-current="true"{% endif %}><b>{{ counts.get(key, 0) }}</b><span>{{ label }}</span></a>
+  {% endfor %}
+</div>
+
+<form class="filters panel" method="get" action="{{ url_for('admin.index') }}" role="search">
+  <div class="field"><label for="q">Search</label><input type="search" id="q" name="q" value="{{ f.q }}" placeholder="Name, email, postcode, phone or reference"></div>
+  <div class="field"><label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="open"{% if f.status == 'open' %} selected{% endif %}>Open (not lost or archived)</option>
+      <option value="all"{% if f.status == 'all' %} selected{% endif %}>All</option>
+      {% for key, label in statuses %}<option value="{{ key }}"{% if f.status == key %} selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select></div>
+  <div class="field"><label for="kind">Type</label>
+    <select id="kind" name="kind"><option value="">Quotes and messages</option>
+      <option value="quote"{% if f.kind == 'quote' %} selected{% endif %}>Quote requests</option>
+      <option value="contact"{% if f.kind == 'contact' %} selected{% endif %}>Messages</option></select></div>
+  <button class="btn btn--primary" type="submit">Show</button>
+  <a class="btn btn--ghost" href="{{ url_for('admin.export', **f) }}">Download CSV</a>
+</form>
+
+{% if rows %}
+<div class="table-wrap">
+  <table class="responsive">
+    <caption class="visually-hidden">Enquiries, newest first</caption>
+    <thead><tr><th scope="col">Received</th><th scope="col">Reference</th><th scope="col">Name</th><th scope="col">Request</th><th scope="col">Postcode</th><th scope="col" class="num">Guide price</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td data-label="Received">{{ r.created_at | when }}</td>
+        <td data-label="Reference"><a href="{{ url_for('admin.detail', ref=r.ref) }}">{{ r.ref }}</a></td>
+        <td data-label="Name">{{ r.name }}</td>
+        <td data-label="Request">{% if r.kind == 'contact' %}Message{% else %}{{ r.service | service_label }}{% endif %}</td>
+        <td data-label="Postcode">{{ r.postcode or '-' }}</td>
+        <td data-label="Guide price" class="num">{% if r.estimate_low %}£{{ r.estimate_low }}-{{ r.estimate_high }}{% else %}-{% endif %}</td>
+        <td data-label="Status"><span class="badge badge--{{ r.status }}">{{ r.status | status_label }}</span></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<nav class="pager" aria-label="Pages">
+  {% if page > 1 %}<a class="btn btn--ghost" href="{{ url_for('admin.index', page=page-1, **f) }}">Newer</a>{% endif %}
+  <span>Page {{ page }} of {{ pages }} ({{ total }} enquiries)</span>
+  {% if page < pages %}<a class="btn btn--ghost" href="{{ url_for('admin.index', page=page+1, **f) }}">Older</a>{% endif %}
+</nav>
+{% else %}
+<div class="panel empty"><h2 class="h3">No enquiries match</h2><p>{% if f.q or f.status not in ('open',) or f.kind %}Try clearing the search or choosing "All".{% else %}New quote requests and messages from the website will appear here.{% endif %}</p></div>
+{% endif %}
+{% endblock %}

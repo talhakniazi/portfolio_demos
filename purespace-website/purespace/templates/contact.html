@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% from "_macros.html" import field, error_summary, describedby %}
+{% block main %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="crumb"><a href="{{ url_for('public.home') }}">Home</a> / Contact</p>
+    <h1>Contact us</h1>
+    <p class="lead">Call, send a WhatsApp, or use the form. We reply to every message within one working day.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <div>
+      <h2>Talk to us</h2>
+      <ul class="contact-ways">
+        <li><strong>Phone</strong><a href="tel:{{ business.phone_link }}">{{ business.phone }}</a></li>
+        <li><strong>WhatsApp</strong><a href="https://wa.me/{{ business.whatsapp_link }}" rel="noopener">{{ business.whatsapp }}</a></li>
+        <li><strong>Email</strong><a href="mailto:{{ business.email }}">{{ business.email }}</a></li>
+      </ul>
+      <h3>Opening hours</h3>
+      <dl class="hours">{% for d, h in business.hours %}<dt>{{ d }}</dt><dd>{{ h }}</dd>{% endfor %}</dl>
+      <p class="small">Looking for a price? The <a href="{{ url_for('public.quote') }}">quote form</a> shows a guide price straight away.</p>
+    </div>
+
+    <div>
+      <h2>Send a message</h2>
+      {{ error_summary(errors) }}
+      <form method="post" action="{{ url_for('public.contact') }}" novalidate data-validate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="hp" aria-hidden="true"><label for="f-website">Leave this empty</label><input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+        {{ field('name', 'Your name', form, errors, autocomplete='name') }}
+        {{ field('email', 'Email address', form, errors, type='email', autocomplete='email', extra='spellcheck="false"') }}
+        {{ field('phone', 'Phone number', form, errors, type='tel', autocomplete='tel', cls='input--mid', required=False) }}
+        <div class="field{% if errors.get('message') %} field--error{% endif %}">
+          <label for="f-message">Your message</label>
+          {% if errors.get('message') %}<span class="error-msg" id="message-error"><span class="visually-hidden">Error:</span> {{ errors['message'] }}</span>{% endif %}
+          <textarea id="f-message" name="message" required maxlength="2000"{{ describedby('message', None, errors) }}>{{ form.get('message', '') }}</textarea>
+        </div>
+        <div class="field{% if errors.get('consent') %} field--error{% endif %}">
+          {% if errors.get('consent') %}<span class="error-msg" id="consent-error"><span class="visually-hidden">Error:</span> {{ errors['consent'] }}</span>{% endif %}
+          <div class="check"><input type="checkbox" id="f-consent" name="consent" value="yes" required{% if form.get('consent') == 'yes' %} checked{% endif %}{{ describedby('consent', None, errors) }}>
+            <label for="f-consent">I agree to {{ business.short_name }} using these details to reply to me, as described in the <a href="{{ url_for('public.privacy') }}">privacy notice</a>.</label></div>
+        </div>
+        <button class="btn btn--primary" type="submit">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
