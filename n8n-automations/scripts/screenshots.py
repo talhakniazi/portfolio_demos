@@ -28,6 +28,15 @@ with sync_playwright() as p:
                     btn.first.click(timeout=1000)
                 except Exception:
                     pass
+        page.keyboard.press("Escape")
+        for sel in ('[data-test-id*="checklist"] button[aria-label*="lose"]', 'button[aria-label="Close"]', '.el-popover button:has(svg)'):
+            try:
+                loc = page.locator(sel)
+                if loc.count():
+                    loc.first.click(timeout=800)
+            except Exception:
+                pass
+        page.mouse.click(800, 650)                                     # click empty canvas to dismiss pop-overs
         page.keyboard.press("Shift+1")                                 # zoom to fit
         page.wait_for_timeout(1500)
         page.screenshot(path=str(OUT / f"{name}-canvas.png"))
@@ -37,7 +46,8 @@ with sync_playwright() as p:
         except Exception:
             items = []
         if items:
-            page.goto(f"{N8N}/workflow/{wid}/executions/{items[0]['id']}", wait_until="networkidle")
+            first = min(items, key=lambda e: int(e["id"]))              # the first test case: hot lead / urgent ticket
+            page.goto(f"{N8N}/workflow/{wid}/executions/{first['id']}", wait_until="networkidle")
             page.wait_for_timeout(4000)
             page.screenshot(path=str(OUT / f"{name}-execution.png"))
         print(name, "canvas ok,", len(items), "successful executions")
