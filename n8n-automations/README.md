@@ -28,8 +28,9 @@ Three importable n8n workflows, each run end to end in a real n8n instance by Gi
 - **Validates the AI's output** field by field, and falls back to keyword rules if the AI is unavailable, so a ticket
   is always created
 - Creates the helpdesk ticket; urgent tickets also alert the on-call channel
-- The customer email is passed to the model as data with an explicit instruction not to follow it; the test set
-  includes a prompt-injection attempt
+- The customer email is passed to the model as data with an explicit instruction not to follow it. Emails that try to
+  instruct the AI ("ignore previous instructions...") are tagged `needs-review`, given neutral priority and no drafted
+  reply, because a test showed the AI *and* simple keyword rules can both be steered by such text
 
 ## Run it yourself
 

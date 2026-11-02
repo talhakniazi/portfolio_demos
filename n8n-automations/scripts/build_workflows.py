@@ -193,7 +193,7 @@ const r = {
   triaged_by: used_ai ? 'ai' : 'rules (AI unavailable)',
   needs_human_review: injection,
 };
-if (injection) { r.priority = rulePri; r.category = ruleCat; r.suggested_reply = ''; }   // don't let the email steer the outcome
+if (injection) { r.priority = 'normal'; r.category = 'other'; r.suggested_reply = ''; }   // neither the AI nor keyword rules can be trusted here: a person decides
 return [{ json: { ...msg, ...r } }];
 """), (660, 300))
 w.node("Create helpdesk ticket", HTTP, 4.2, http("POST", "/helpdesk/tickets",
